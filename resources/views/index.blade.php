@@ -7,7 +7,7 @@
 
 
 <div class="row" style="height: 90vh;">
-    <div class="col-md-2">
+    <div class="col-md-4">
         @include('leftmenu')
     </div>
     <div class="col-md-10 shadow p-3  rounded">
