@@ -1,0 +1,58 @@
+@import 'https://fonts.googleapis.com/css?family=Kanit:400,300&subset=thai,latin';
+body,table{
+    font-family: 'Kanit', sans-serif !important;
+}
+div.card {
+    width: 250px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+  }
+  
+  div.header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    font-size: 40px;
+  }
+  
+  .txt-header {
+    /* font-family: 'Roboto Mono', monospace !important; */
+    font-size: 36px;
+  }
+  
+  div.container {
+    padding: 10px;
+  }
+  
+  .layout-text-center {
+      display: flex;
+      justify-content: center;
+  }
+  
+  .layout-al-center {
+      display: flex;
+      align-items: center;
+  }
+  
+  th.text-left {
+    text-align: left;
+  }
+  
+  th.text-center {
+    text-align: center;
+  }
+  
+  .btn-nav {
+    color: #d9e1ec;
+    font-size: 17px;
+    /* font-family: 'K2D', sans-serif; */
+  }
+  
+  .btn-nav:hover {
+    cursor: pointer;
+    color: #2e64cf;
+  }
+
+  .icon-leftmenu{
+    width: 25px;
+  }
