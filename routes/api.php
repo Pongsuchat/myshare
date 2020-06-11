@@ -16,3 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//('ชื่อเส้นทาง','ชื่อcontroller@function')
+Route::POST('register', 'RegisterController@register');
+
+Route::GET('getUser', 'UserController@getUser');

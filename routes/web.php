@@ -12,5 +12,6 @@
 */
 
 Route::get('/', function () {
-    return view('loginblackoffice');
+    return view('login/loginblackoffice');
+    // return view('index');
 });
