@@ -12,16 +12,16 @@
     </div>
     <div class="col-md-10 shadow p-3  rounded">
 
-        <nav  class="navbar navbar-light " style="background-color: #b8e8ee;">
+        <nav  class="navbar navbar-light " style="background-color: #b8e8ee;margin-bottom: 1em;">
             <a class="navbar-brand">เจ้าหน้าที่</a>
             
             <form class="form-inline">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-info my-2 my-sm-0 mr-3" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
               <button class="btn btn-success my-2 my-sm-0 " type="submit"><i class="fa fa-user-plus mr-2" aria-hidden="true"></i>เพิ่มผู้ดูแล</button>
             </form>
           </nav>
-        <table class="table">
+
+
+        <table class="table" id="myTable">
             <thead>
               <tr>
                 <th scope="col" class="text-left">ชื่อ-นามสกุล</th>

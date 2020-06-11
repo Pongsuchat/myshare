@@ -5,8 +5,8 @@
         <td class="btn-nav layout-al-center dropdown-toggle" style="border-top: none !important;" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-user-o mr-2 icon-leftmenu" aria-hidden="true"></i>
           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <button class="dropdown-item" type="button"><i class="fa fa-user-circle mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการผู้ดูแลระบบ</button>
-            <button class="dropdown-item" type="button"><i class="fa fa-users mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการผู้ใช้งานทั่วไป</button>
+            <button class="dropdown-item dropdown-item1" type="button"><i class="fa fa-user-circle mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการผู้ดูแลระบบ</button>
+            <button class="dropdown-item dropdown-item1" type="button"><i class="fa fa-users mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการผู้ใช้งานทั่วไป</button>
             
           </div>
 
@@ -17,8 +17,8 @@
         <td class="btn-nav layout-al-center dropdown-toggle" style="border-top: none !important;" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-globe mr-2 icon-leftmenu" aria-hidden="true"></i>
           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <button class="dropdown-item" type="button"><i class="fa fa-map mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการทริปเที่ยว</button>
-            <button class="dropdown-item" type="button"><i class="fa fa-truck mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการการส่งของ</button>
+            <button class="dropdown-item dropdown-item1" type="button" ><i class="fa fa-map mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการทริปเที่ยว</button>
+            <button class="dropdown-item dropdown-item1" type="button"><i class="fa fa-truck mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการการส่งของ</button>
             
           </div>
 
@@ -30,8 +30,8 @@
       <td class="btn-nav layout-al-center dropdown-toggle" style="border-top: none !important;" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fa fa-bars mr-2 icon-leftmenu" aria-hidden="true"></i>
         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-          <button class="dropdown-item" type="button"><i class="fa fa-picture-o mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการรูปภาพ</button>
-          <button class="dropdown-item" type="button"><i class="fa fa-text-width mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการข้อความแสดงผล</button>
+          <button class="dropdown-item dropdown-item1" type="button"><i class="fa fa-picture-o mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการรูปภาพ</button>
+          <button class="dropdown-item dropdown-item1" type="button"><i class="fa fa-text-width mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการข้อความแสดงผล</button>
           
         </div>
 

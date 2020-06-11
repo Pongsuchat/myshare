@@ -56,3 +56,8 @@ div.card {
   .icon-leftmenu{
     width: 25px;
   }
+
+  .dropdown-item1:hover{
+    background-color: #2e64cf !important;
+    color: #d9e1ec !important;
+  }
