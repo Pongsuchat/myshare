@@ -1,6 +1,3 @@
-
-{{-- <div class="container-fluid"> --}}
-  
 <nav class="navbar navbar-light shadow p-3 mb-3  rounded" style="background-color: #6bbdf8;">
   <a class="navbar-brand txt-header">MyShare</a>
   
@@ -10,4 +7,3 @@
     
   </form>
 </nav>
-{{-- </div> --}}

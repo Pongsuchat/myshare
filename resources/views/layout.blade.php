@@ -9,6 +9,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <link rel="stylesheet" href="{{asset('css/index.css')}}">
+    <link rel="stylesheet" href="{{asset('cssmain.css')}}">
+    <link rel="stylesheet" href="{{asset('css/util.css')}}">
+    
  
 
     {{-- Jquery CDN --}}
@@ -25,6 +28,7 @@
    
    
     <script src="{{asset('js/datatable.js')}}"></script>
+    
     <title>MyShare</title>
 
 
