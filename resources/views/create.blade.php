@@ -9,52 +9,48 @@
           </button>
         </div>
         <div class="modal-body">
-            <form>
+            <form method="POST" action="{{url('/register')}}">
+
+                {{csrf_field()}}
+
                 <div class="form-row">
                   <div class="col-md-6 mb-3">
                     <label for="validationServer01">ชื่อ - นามสกุล</label>
-                    <input type="text" class="form-control " id="validationServer01" placeholder="ชื่อ - นามสกุล" value="" required>
-                    
+                    <input type="text" class="form-control " id="userName" placeholder="ชื่อ - นามสกุล" value="" required>
                   </div>
                   <div class="col-md-2 mb-3">
                     <label for="validationServer02">รหัสประเทศ</label>
-                    <input type="text" class="form-control " id="validationServer02" placeholder="รหัสประเทศ" value="" required>
-                    
+                    <input type="text" class="form-control " id="countryCode" placeholder="รหัสประเทศ" value="" required>
                   </div>
                   <div class="col-md-4 mb-3">
                     <label for="validationServerUsername">เบอร์โทรศัพท์</label>
                     <div class="input-group">
-                
-                      <input type="text" class="form-control " id="validationServerUsername" placeholder="เบอร์โทรศัพท์" value="" required>
-                      
+                      <input type="text" class="form-control " id="phoneNumber" placeholder="เบอร์โทรศัพท์" value="" required>
                     </div>
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="col-md-6 mb-3">
                     <label for="validationServer03">Passwod</label>
-                    <input type="text" class="form-control " id="validationServer03" placeholder="รหัสผ่าน" required>
-                    
+                    <input type="text" class="form-control " id="password" placeholder="รหัสผ่าน" required>
                   </div>
                   <div class="col-md-3 mb-3">
                     <label for="validationServer04">ระดับ</label>
-                    <input type="text" class="form-control " id="validationServer04" placeholder="ระดับ" required>
-                    
+                    <input type="text" class="form-control " id="role" placeholder="ระดับ" required>
                   </div>
                   <div class="col-md-3 mb-3">
                     <label for="validationServer05">รูปบัตรประชาชน</label>
-                    <input type="text" class="form-control " id="validationServer05" placeholder="เพิ่มไฟล์" required>
-                    
+                    <input type="text" class="form-control " id="personalPicture" placeholder="เพิ่มไฟล์" >
                   </div>
                 </div>
                 
-            
-              </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">เพิ่มข้อมูล</button>
+          <input type="submit" class="btn btn-primary" value="เพิ่มข้อมูล"/> 
+          
         </div>
+    </form>
       </div>
     </div>
   </div>

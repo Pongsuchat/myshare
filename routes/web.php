@@ -17,6 +17,7 @@ Route::get('/', function () {
 });
 Route::get('loginblackoffice','LoginController@index');
 Route::post('/loginblackoffice/checklogin', 'LoginController@checklogin');
+Route::post('/register', 'RegisterController@register');
 // Route::middleware(['auth'])->group(function () {
     //
     Route::get('/test', function () {

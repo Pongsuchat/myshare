@@ -10,6 +10,7 @@ use DB;
 class RegisterController extends Controller
 { public function register(Request $request)
     {
+    
         $json=$request->json()->all();
         $userName = $json['userName'];
         $phoneNumber = $json['phoneNumber'];

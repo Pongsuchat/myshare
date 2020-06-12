@@ -24,6 +24,7 @@ class LoginController extends Controller
         ]);
             $phone=$request->phoneNumber;
             $password = $request->input('password');
+            
             // echo $password; die;
             $user = DB::table('users')->where('phoneNumber',$phone)->first();
             if($user){
