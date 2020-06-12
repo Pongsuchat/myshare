@@ -1,6 +1,10 @@
 @import 'https://fonts.googleapis.com/css?family=Kanit:400,300&subset=thai,latin';
+@import 'https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap';
+@import 'https://fonts.googleapis.com/css2?family=K2D&family=Roboto+Mono&display=swap';
+
 body,table{
-    font-family: 'Kanit', sans-serif !important;
+    /* font-family: 'Kanit', sans-serif !important; */
+    font-family: 'K2D', sans-serif !important;
 }
 div.card {
     width: 250px;
@@ -16,8 +20,8 @@ div.card {
   }
   
   .txt-header {
-    /* font-family: 'Roboto Mono', monospace !important; */
-    font-size: 36px;
+    font-family: 'Roboto Mono', monospace !important;
+    font-size: 36px !important;
   }
   
   div.container {
@@ -45,7 +49,7 @@ div.card {
   .btn-nav {
     color: #d9e1ec;
     font-size: 17px;
-    /* font-family: 'K2D', sans-serif; */
+    font-family: 'K2D', sans-serif !important;
   }
   
   .btn-nav:hover {
