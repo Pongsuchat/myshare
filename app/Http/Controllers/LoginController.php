@@ -30,8 +30,9 @@ class LoginController extends Controller
             if($user){
                 if(Hash::check($password, $user['password'])){
                     $data = Users::all();
-                    return view('index',['allusers'=>$data]);
-
+                    // return view('index',['allusers'=>$data]);
+                    // header( "dashboard" );
+                    return redirect('dashboard');
                 }else{
                     echo "password incorrent";
                 }

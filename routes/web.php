@@ -15,9 +15,12 @@ Route::get('/', function () {
     return view('login/loginblackoffice');
     // return view('index');
 });
+Route::get('dashboard','DashboardController@index');
 Route::get('loginblackoffice','LoginController@index');
 Route::post('/loginblackoffice/checklogin', 'LoginController@checklogin');
 Route::post('/register', 'RegisterController@register');
+Route::resource('users','CreateuserController');
+// Route::Post('deleteuser','CreateuserController@destroy');
 // Route::middleware(['auth'])->group(function () {
     //
     Route::get('/test', function () {

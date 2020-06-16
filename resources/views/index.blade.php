@@ -27,7 +27,7 @@ else
 
     
       <button class="btn btn-success my-2 my-sm-0 " data-toggle="modal"
-        data-target="#exampleModalCenter"><i class="fa fa-user-plus mr-2" aria-hidden="true"></i>เพิ่มผู้ดูแล</button>
+        data-target="#modalCreateUser"><i class="fa fa-user-plus mr-2" aria-hidden="true"></i>เพิ่มผู้ดูแล</button>
     
   </nav>
 
@@ -48,13 +48,25 @@ else
     @foreach($allusers as $data)
     <tbody>
       <tr>
+        {{-- {{id}} --}}
         <td>{{$data->userName}}</td>
         <td>{{$data->countryCode}}</td>
         <td>{{$data->phoneNumber}}</td>
         <td>{{$data->role}}</td>
 
-        <td class="layout-text-center"><i class="fa fa-pencil mr-4" aria-hidden="true"></i>
-          <i class="fa fa-trash" aria-hidden="true"></i>
+        <td class="layout-text-center">
+  
+        <a  type="button" data-toggle="modal" data-target="#modalEditUser" action="{{url('users')}}" onclick="setUpData($data->id, $data->userName, $data->countryCode, $data->phoneNumber, $data->role)"> 
+          <i class="fa fa-pencil mr-4 btn btn-outline-primary" aria-hidden="true" ></i></a>
+          
+        <form method="POST" class="fa fa-trash btn btn-outline-danger"
+        action="{{action('CreateuserController@destroy',$data['id'])}}">
+        {{csrf_field()}}
+        <button input type="submit"></button>
+          </form>
+
+            {{-- <i class="fa fa-trash btn btn-outline-danger" aria-hidden="true" type="button" data-target="#modalDeleteUser"></i> --}}
+          
         </td>
       </tr>
     </tbody>
@@ -65,8 +77,14 @@ else
   </table>
 </div>
 <div>
-  @include('create')
+  @include('user/createuser')
+  @include('user/edituser')
 </div>
 </div>
 
+<script>
+  function setUpData (id, username, country, phonenumber, role) {
+    console.log(id, username, country, phonenumber, role);
+  }
+</script>
 @endsection

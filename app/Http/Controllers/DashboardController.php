@@ -11,6 +11,7 @@ class DashboardController extends Controller
    public function index()
    {
     $data = Users::all();
-    dd('$data');
+
+    return view('index',['allusers'=>$data]);
    }
 }
