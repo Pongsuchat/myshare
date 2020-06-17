@@ -75,7 +75,8 @@ class CreateuserController extends Controller
      */
     public function edit($id)
     {
-        
+        $data=Users::find($id);
+        dd($data);
     }
 
     /**
