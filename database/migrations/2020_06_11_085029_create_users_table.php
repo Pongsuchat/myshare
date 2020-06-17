@@ -23,6 +23,12 @@ class CreateUsersTable extends Migration
             $table->string('userToken');
             $table->string('role');
             $table->string('deviceToken');
+            $table->decimal('rating');
+            $table->object('altAddress');
+            $table->object('currentAddress');
+            $table-timstamp('created');
+            $table->string('status');
+
         });
     }
 
