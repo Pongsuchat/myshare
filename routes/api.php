@@ -21,6 +21,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Route::POST('register', 'RegisterController@register');
 
 Route::POST('register', 'api\RegisterController@register');
+Route::POST('login', 'api\LoginController@login');
+Route::POST('userpicture', 'api\PersonalpictureController@userpicture');
+Route::POST('personalpicture', 'api\PersonalpictureController@personalpicture');
 Route::GET('getUser', 'UserController@getUser');
 
 Route::GET('test', function(){

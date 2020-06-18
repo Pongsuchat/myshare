@@ -26,8 +26,36 @@ class RegisterController extends Controller
         return $jwt;
 
     }
+
+    // public function checkusername($userName)
+    // {
+    //     $user = DB::table('users')->where('userName', $userName)->first();
+
+    //     // return response()->json($user);
+    //     if($user){
+    //         return true;
+    //     }else{
+    //         return false;
+    //     }
+        
+    // }
+
+    public function checkphonenumber($phoneNumber)
+    {
+        $user = DB::table('users')->where('phoneNumber', $phoneNumber)->first();
+
+        // return response()->json($user);
+        if($user){
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
+
     public function register(Request $request)
     {
+        //รับข้อมูลรูปแบบ json มา
         $json=$request->json()->all();
         $userName = $json['userName'];
         $phoneNumber = $json['phoneNumber'];
@@ -37,7 +65,7 @@ class RegisterController extends Controller
 
         // dd($token);
         $data = [
-            
+            //เก็บรูปแบบข้อมูลที่รับมาเป็น array
             'userName'=>$json['userName'],
             'phoneNumber'=>$json['phoneNumber'],
              'password'=>Hash::make($password),
@@ -46,6 +74,22 @@ class RegisterController extends Controller
              'created'=>date("Y-m-d H:i:s"),
             
         ];
+       
+        if($this->checkphonenumber($phoneNumber)===true){
+            return response()->json([
+                'status'=>500,
+                'msg'=>'Phone number has already been used.'
+            ]);
+            exit;
+        // }elseif($this->checkusername($userName)===true){
+        //     return response()->json([
+        //             'status'=>500,
+        //             'msg'=>'Username has already been used.'
+        //         ]);
+        //         exit;
+         }
+
+    
         $insert=DB::table('users')->insert($data);
         if($insert){
              return response()->json([
