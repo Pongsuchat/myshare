@@ -21,9 +21,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Route::POST('register', 'RegisterController@register');
 
 Route::POST('register', 'api\RegisterController@register');
+Route::Post('comparetoken','api\RegisterController@comparetoken');
+
 Route::POST('login', 'api\LoginController@login');
-Route::POST('userpicture', 'api\PersonalpictureController@userpicture');
-Route::POST('personalpicture', 'api\PersonalpictureController@personalpicture');
+
+Route::POST('userpicture', 'api\PersonalpictureController@userpicture');//route รูปประจำตัว
+Route::POST('personalpicture', 'api\PersonalpictureController@personalpicture');//route รูปบัตรประชาชน
+Route::POST('vehicleconfim', 'api\VehicleconfirmController@vehicleconfim');
+
+
+
 Route::GET('getUser', 'UserController@getUser');
 
 Route::GET('test', function(){

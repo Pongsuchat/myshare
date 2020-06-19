@@ -9,6 +9,9 @@ use DB;
 class PersonalpictureController extends Controller
 {
 
+    
+
+
     function userpicture(Request $request)
     {
         $uPicture = $request->file('uPicture');
@@ -92,8 +95,5 @@ class PersonalpictureController extends Controller
         }
     }
 
-    public function checkupload(Request $request)
-    {
-        # code...
-    }
+    
 }

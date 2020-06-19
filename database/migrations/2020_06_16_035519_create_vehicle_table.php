@@ -16,6 +16,8 @@ class CreateVehicleTable extends Migration
         Schema::create('vehicle', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('vehicleRegistration')->unique();
+            $table->array('vehicleType');
+            $table->array('vehiclePicture');
             $table->string('personalCardPicture')->unique();
             $table->string('driveLicensePicture')->unique();
             $table->string('actPicture')->unique();;
@@ -29,9 +31,7 @@ class CreateVehicleTable extends Migration
             $table->string('user_id');
             $table->decimal('weight');
             $table->string('status');
-            $table->timestamps('created');
-
-
+            $table->timestamps('approveDate');
         });
     }
 
