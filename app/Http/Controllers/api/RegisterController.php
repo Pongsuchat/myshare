@@ -47,29 +47,6 @@ class RegisterController extends Controller
 
         }
 
-        // $user = DB::table('users')->where('userToken',$userToken)->first();
-        // if($userToken == $user['userToken']){
-        //     @unlink(public_path( $user['personalPicture']));//unlink เลือกไฟล์ที่อยู่ในก้อนข้อข้อมูล$user ที่ฟิล userPicture ทำให้ลบข้อมูลเดิมก่อนที่จะอัพข้อมูลใหม่เข้าไป
-        //     $perPicture = $request->file('perPicture');
-        //     $new_name =  rand() . '.' .$request->perPicture->extension();
-        //     $path_image = "/images/personal/".$new_name;
-        //     $perPicture->move("images/personal/", $new_name);
-
-        //      $update=DB::table('users')->where('userToken',$userToken)->update([
-        //             'personalPicture'=>$path_image 
-        //             ]);
-        //             if($update){
-        //                 return response()->json([
-        //                    'status'=>200,
-        //                    'msg'=>'Upload success'   
-        //                ]);
-        //             }
-        // }else{
-        //     return response()->json([
-        //         'status'=>500,
-        //         'msg'=>'Upload Failed',
-        //     ]);
-        // }
     
     }
 

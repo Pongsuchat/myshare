@@ -27,8 +27,8 @@ Route::POST('login', 'api\LoginController@login');
 
 Route::POST('userpicture', 'api\PersonalpictureController@userpicture');//route รูปประจำตัว
 Route::POST('personalpicture', 'api\PersonalpictureController@personalpicture');//route รูปบัตรประชาชน
-Route::POST('vehicleconfim', 'api\VehicleconfirmController@vehicleconfim');
-
+Route::POST('vehicleprofileconfirm', 'api\VehicleconfirmController@vehicleprofileconfirm');
+Route::POST('driverlicenseconfirm', 'api\VehicleconfirmController@driverlicenseconfirm');
 
 
 Route::GET('getUser', 'UserController@getUser');

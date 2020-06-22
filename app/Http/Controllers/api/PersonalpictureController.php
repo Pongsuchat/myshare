@@ -39,7 +39,6 @@ class PersonalpictureController extends Controller
                                'msg'=>'Upload success'   
                            ]);
                         }
-                //return response()->json( $path = $request->userPicture->path());  'url'=>$request->server ("SERVER_NAME")
             }else{
                 return response()->json([
                     'status'=>500,
@@ -93,6 +92,11 @@ class PersonalpictureController extends Controller
                 'msg'=>'usertoken not found',
             ]);
         }
+    }
+
+    public function checkconfirmpersonalpicture(Type $var = null)
+    {
+        # code...
     }
 
     
