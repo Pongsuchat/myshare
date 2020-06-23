@@ -84,7 +84,10 @@ class RegisterController extends Controller
         $deviceToken = $json['deviceToken'];
         $token = $this->token_jwt();
 
-        
+        // $now = date("Y-m-d H:i:s");
+        // return response()->json($now, 200);
+        // die;
+        // $date = date("Y-m-d H:i:s");
         $data = [
             //เก็บรูปแบบข้อมูลที่รับมาเป็น array
             'userName'=>$json['userName'],
@@ -95,6 +98,8 @@ class RegisterController extends Controller
              'created'=>date("Y-m-d H:i:s")
             
         ];
+        // return response()->json($data, 200);
+        // die;
        
         if($this->checkphonenumber($phoneNumber)===true){
             return response()->json([
