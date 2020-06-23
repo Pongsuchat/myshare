@@ -27,10 +27,12 @@ Route::POST('login', 'api\LoginController@login');
 
 Route::POST('userpicture', 'api\PersonalpictureController@userpicture');//route รูปประจำตัว
 Route::POST('personalpicture', 'api\PersonalpictureController@personalpicture');//route รูปบัตรประชาชน
-Route::POST('vehicleprofileconfirm', 'api\VehicleconfirmController@vehicleprofileconfirm');
+Route::POST('checkupload', 'api\PersonalpictureController@checkupload');
+
+//Route::POST('vehicleprofileconfirm', 'api\VehicleconfirmController@vehicleprofileconfirm');
 Route::POST('uploadvehicleImage', 'api\VehicleconfirmController@uploadvehicleImage');
 Route::POST('multiuploadvehicleImage', 'api\VehicleconfirmController@multiuploadvehicleImage');
-Route::POST('imageWatermark', 'api\PersonalpictureController@imageWatermark');
+
 
 
 

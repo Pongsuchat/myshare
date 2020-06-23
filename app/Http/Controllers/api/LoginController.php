@@ -29,6 +29,11 @@ class LoginController extends Controller
     public function login(Request $request)
     {
 
+        // $validatedData = $request->validate([
+        //     'phoneNumber' => 'required',
+        //     'password' => 'required',
+        // ]);
+        
         $json = $request->json()->all();
         $phoneNumber = $json['phoneNumber'];
         $password = $json['password'];

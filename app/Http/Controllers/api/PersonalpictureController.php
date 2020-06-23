@@ -24,12 +24,15 @@ class PersonalpictureController extends Controller
             if($userToken == $user['userToken']){
                 @unlink(public_path( $user['userPicture']));//unlink เลือกไฟล์ที่อยู่ในก้อนข้อข้อมูล$user ที่ฟิล userPicture ทำให้ลบข้อมูลเดิมก่อนที่จะอัพข้อมูลใหม่เข้าไป
                 $uPicture = $request->file('uPicture');
-                // $new_name = rand() . '.' . $uPicture->getClientOriginalExtension();
+                
                 $new_name =  rand() . '.' .$request->uPicture->extension();
-                // $path_image = "/images/user/".$user['userName']."/".$new_name;
-                //  $uPicture->move("images/user/".$user['userName'].'/', $new_name);
+               
                 $path_image = "/images/user/".$new_name;
                  $uPicture->move("images/user/", $new_name);
+
+                 $img = Image::make(public_path($path_image));
+                 $img->insert(public_path('images/watermark/watermark.png'), 'center');
+                 $img->save(public_path($path_image));
 
                  $update=DB::table('users')->where('userToken',$userToken)->update([
                         'userPicture'=>$path_image 
@@ -72,6 +75,10 @@ class PersonalpictureController extends Controller
                 $path_image = "/images/personal/".$new_name;//กำหนดพาท
                 $perPicture->move("images/personal/", $new_name);//ย้ายรูปไปยังพาท
 
+                $img = Image::make(public_path($path_image));
+                $img->insert(public_path('images/watermark/watermark.png'), 'center');
+                $img->save(public_path($path_image));
+
                  $update=DB::table('users')->where('userToken',$userToken)->update([
                         'personalPicture'=>$path_image 
                         ]);
@@ -95,18 +102,28 @@ class PersonalpictureController extends Controller
         }
     }
 
-    public function imageWatermark()
+    public function checkupload(Request $request)
     {
-        $img = Image::make(public_path('images/watermark/personal.jpg'));
+        $userToken = $request->input('userToken');
+        $user = DB::table('users')->where('userToken',$userToken)->first();
+        $userPicture =  empty($user['userPicture']) ?null:$user['userPicture']; // ทำให้ค่าว่างเปลี่ยนเป็น null ถ้าเป็นจริง
+        $personalPicture = empty($user['personalPicture']) ?null:$user['personalPicture'];
 
-       
-        $img->insert(public_path('images/watermark/watermark.png'), 'center');
 
-        $img->save(public_path('images/watermark/new-image3.png'));
-
-       
-
-       
+        if($userPicture==null || $personalPicture==null){
+            
+            return response()->json([
+                'status'=>404,
+                'msg'=>'picture not found',
+                
+            ]);  
+         }
+        else{
+            return response()->json([
+                'status'=>200,
+                'msg'=>'all upload success',
+            ]);
+        }
         
     }
 
