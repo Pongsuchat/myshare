@@ -92,6 +92,7 @@ class RegisterController extends Controller
              'deviceToken'=>$deviceToken, 
              'userToken'=> $token,
              'created'=>date("Y-m-d H:i:s")
+             
             
         ];
        
@@ -99,6 +100,7 @@ class RegisterController extends Controller
             return response()->json([
                 'status'=>500,
                 'msg'=>'Phone number has already been used.'
+                
             ]);
             exit;
         }elseif($this->checkusername($userName)===true){

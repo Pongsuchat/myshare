@@ -45,7 +45,7 @@ class VehicleconfirmController extends Controller
             'updateAt'=>date("Y-m-d H:i:s"),
         ];
         $this->removePicture($action,$user_db['_id']);
-        $vehicles = DB::table('vehicles')->where('user_id',$user_db['_id'])->first();
+        $vehicles = DB::table('vehicles')->where('user_id',$user_db['_id'])->update($data);
         if($vehicles){
             return response()->json([
                 'status'=>200,
@@ -58,7 +58,7 @@ class VehicleconfirmController extends Controller
                 $action=>$path_image,
                 'user_id'=>$user_db['_id'],
                 'createAt'=>date("Y-m-d H:i:s"),
-                'approveDate'=> "pending"
+                
             ];
            
             $user1 = DB::table('vehicles')->insert($data);
@@ -156,5 +156,62 @@ class VehicleconfirmController extends Controller
         }
         return $this->uploadImageCenter($request);
      }
+
+
+     public function checkvehicleupload(Request $request)
+     {
+        $userToken = $request->input('userToken');
+        if ($this->comparetoken($userToken) === false) {
+            return response()->json([
+                'status' => 404,
+                'msg' => 'token is not found',
+            ]);
+            exit;
+        }
+
+        $usercheck = DB::table('users')->where('userToken',$userToken)->first();
+        $vehicle_user = DB::table('vehicles')->where('user_id',$usercheck['_id'])->first();
+
+       
+
+        $vehiclePicture =  empty($vehicle_user['vehiclePicture']) ?null:$vehicle_user['vehiclePicture']; // ทำให้ค่าว่างเปลี่ยนเป็น null ถ้าเป็นจริง
+        $personalCardPicture =  empty($vehicle_user['personalCardPicture']) ?null:$vehicle_user['personalCardPicture'];
+        $driverLicensePicture =  empty($vehicle_user['driverLicensePicture']) ?null:$vehicle_user['driverLicensePicture'];
+        $actPicture =  empty($vehicle_user['actPicture']) ?null:$vehicle_user['actPicture'];
+        $registrationPicture =  empty($vehicle_user['registrationPicture']) ?null:$vehicle_user['registrationPicture'];
+        $insurancePicture =  empty($vehicle_user['insurancePicture']) ?null:$vehicle_user['insurancePicture'];
+        $vehicleDetailPicture =  empty($vehicle_user['vehicleDetailPicture']) ?null:$vehicle_user['vehicleDetailPicture'];
+        
+        if($vehiclePicture==null || $personalCardPicture==null || $driverLicensePicture==null || $actPicture==null || $registrationPicture==null
+        || $insurancePicture==null || $vehicleDetailPicture==null){
+            
+            return response()->json([
+                'status'=>404,
+                'msg'=>'upload failed',
+                
+            ]);  
+         }
+        else{
+
+            $data = [
+                'status'=> "pending"
+            ];
+            $vehicles_status = DB::table('vehicles')->where('user_id',$usercheck['_id'])->update($data);
+
+            if($vehicles_status){
+                return response()->json([
+                    
+                    'status'=>200,
+                    'msg'=>'Pending approval',
+                  
+                ]); 
+            }
+
+            
+        }
+        
+    }
+
+     
     
 }

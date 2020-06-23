@@ -10,9 +10,6 @@ use Image;
 class PersonalpictureController extends Controller
 {
 
-    
-
-
     function userpicture(Request $request)
     {
         $uPicture = $request->file('uPicture');
@@ -109,12 +106,17 @@ class PersonalpictureController extends Controller
         $userPicture =  empty($user['userPicture']) ?null:$user['userPicture']; // ทำให้ค่าว่างเปลี่ยนเป็น null ถ้าเป็นจริง
         $personalPicture = empty($user['personalPicture']) ?null:$user['personalPicture'];
 
-
+        if(!$user){
+            return response()->json([
+                'status'=>404,
+                'msg'=>'usertoken not found',
+            ]);exit;
+        }
         if($userPicture==null || $personalPicture==null){
             
             return response()->json([
                 'status'=>404,
-                'msg'=>'picture not found',
+                'msg'=>'upload fail',
                 
             ]);  
          }

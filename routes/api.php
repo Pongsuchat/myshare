@@ -29,7 +29,7 @@ Route::POST('userpicture', 'api\PersonalpictureController@userpicture');//route 
 Route::POST('personalpicture', 'api\PersonalpictureController@personalpicture');//route รูปบัตรประชาชน
 Route::POST('checkupload', 'api\PersonalpictureController@checkupload');
 
-//Route::POST('vehicleprofileconfirm', 'api\VehicleconfirmController@vehicleprofileconfirm');
+Route::POST('checkvehicleupload', 'api\VehicleconfirmController@checkvehicleupload');
 Route::POST('uploadvehicleImage', 'api\VehicleconfirmController@uploadvehicleImage');
 Route::POST('multiuploadvehicleImage', 'api\VehicleconfirmController@multiuploadvehicleImage');
 
