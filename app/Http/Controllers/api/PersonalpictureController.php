@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use Image;
 
 class PersonalpictureController extends Controller
 {
@@ -66,10 +67,10 @@ class PersonalpictureController extends Controller
         if($user){
             if($userToken == $user['userToken']){
                 @unlink(public_path( $user['personalPicture']));//unlink เลือกไฟล์ที่อยู่ในก้อนข้อข้อมูล$user ที่ฟิล userPicture ทำให้ลบข้อมูลเดิมก่อนที่จะอัพข้อมูลใหม่เข้าไป
-                $perPicture = $request->file('perPicture');
-                $new_name =  rand() . '.' .$request->perPicture->extension();
-                $path_image = "/images/personal/".$new_name;
-                $perPicture->move("images/personal/", $new_name);
+                $perPicture = $request->file('perPicture');//รับไฟล์มาจากหน้าบ้าน
+                $new_name =  rand() . '.' .$request->perPicture->extension();//เปลี่ยนชื่อ
+                $path_image = "/images/personal/".$new_name;//กำหนดพาท
+                $perPicture->move("images/personal/", $new_name);//ย้ายรูปไปยังพาท
 
                  $update=DB::table('users')->where('userToken',$userToken)->update([
                         'personalPicture'=>$path_image 
@@ -94,9 +95,19 @@ class PersonalpictureController extends Controller
         }
     }
 
-    public function checkconfirmpersonalpicture(Type $var = null)
+    public function imageWatermark()
     {
-        # code...
+        $img = Image::make(public_path('images/watermark/personal.jpg'));
+
+       
+        $img->insert(public_path('images/watermark/watermark.png'), 'center');
+
+        $img->save(public_path('images/watermark/new-image3.png'));
+
+       
+
+       
+        
     }
 
     

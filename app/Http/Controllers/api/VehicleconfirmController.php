@@ -6,6 +6,7 @@ use App\Http\Controllers\api\RegisterController;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Request;
+use Image;
 
 class VehicleconfirmController extends Controller
 {
@@ -60,7 +61,7 @@ class VehicleconfirmController extends Controller
                 'approveDate'=> "pending"
             ];
            
-            $user1 = DB::table('vehicles')->where('user_id',$user_db['_id'])->insert($data);
+            $user1 = DB::table('vehicles')->insert($data);
             if($user1){
                 return response()->json([
                     'status'=>200,
@@ -124,6 +125,11 @@ class VehicleconfirmController extends Controller
         $path = $this->pathFile($data);
         $path_image = $path.$filename;
         $moveImage = $data->file('picture')->move(public_path($path),$filename);
+
+        $img = Image::make(public_path($path_image));
+        $img->insert(public_path('images/watermark/watermark.png'), 'center');
+        $img->save(public_path($path_image));
+        
         $data_update = [
             'path'=>$path_image,
             'action'=>$data->input('action'),

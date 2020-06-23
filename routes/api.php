@@ -30,6 +30,8 @@ Route::POST('personalpicture', 'api\PersonalpictureController@personalpicture');
 Route::POST('vehicleprofileconfirm', 'api\VehicleconfirmController@vehicleprofileconfirm');
 Route::POST('uploadvehicleImage', 'api\VehicleconfirmController@uploadvehicleImage');
 Route::POST('multiuploadvehicleImage', 'api\VehicleconfirmController@multiuploadvehicleImage');
+Route::POST('imageWatermark', 'api\PersonalpictureController@imageWatermark');
+
 
 
 Route::GET('getUser', 'UserController@getUser');
