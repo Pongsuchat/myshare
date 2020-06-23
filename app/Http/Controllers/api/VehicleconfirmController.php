@@ -15,60 +15,7 @@ class VehicleconfirmController extends Controller
         $RegisterController = new RegisterController();
         return $RegisterController->comparetoken($token);
     }
-    public function vehicleprofileconfirm(Request $request)
-    {
-        $vehicleprofilepicture = $request->file('vehicleprofilepicture');
-        $userToken = $request->input('userToken');
-        if ($this->comparetoken($userToken) === false) {
-            return response()->json([
-                'status' => 404,
-                'msg' => 'token is not found',
-            ]);
-            exit;
-        }
-
-
-
-        $user = DB::table('users')->where('userToken', $userToken)->first();
-
-        @unlink(public_path($user['vehiclePicture']));
-        $vehicleprofilepicture = $request->file('vehicleprofilepicture');
-        $new_name = rand() . '.' . $request->vehicleprofilepicture->extension();
-        $path_image = "/images/vehicleprofile/155/" . $new_name;
-        $vehicleprofilepicture->move("images/vehicleprofile/155/", $new_name);
-
-       
-        $vehicle_user_id = DB::table('vehicles')->where('user_id',$user['_id'])->first();
-        if($userToken == $user['_id']){
-
-            $update=DB::table('vehicles')->where('user_id',$user['_id'])->update([
-                'vehiclePicture'=>$path_image 
-                ]);
-                return response()->json([
-                   'status'=>200,
-                   'msg'=>'Upload success'   
-               ]);
-            
-        } 
-        // elseif {
-        //     $insert = DB::table('vehicles')->insert([
-        //         'vehiclePicture' => $path_image, 'user_id' => $user['_id']
-        //     ]);
-        //     return response()->json([
-        //         'status'=>200,
-        //            'msg'=>'Upload success'
-        //     ]);
-        // } else{
-        //     return response()->json([
-        //         'status' => 500,
-        //         'msg' => 'Upload Failed',
-        //     ]);
-
-        // }
-
-        
-
-    }
+    
     private function randomName($request)
     {
         return  rand(). '.' . $request->picture->extension(); 
@@ -84,7 +31,6 @@ class VehicleconfirmController extends Controller
         $username = $this->getUser($request->input('userToken'));
         $path_image = "/images/vehicleprofile/".$username['userName'].'/';
         return $path_image;
-        // return  rand(). '.' . $request->picture->extension(); 
     }
 
     private function updateImage($data)
@@ -92,30 +38,28 @@ class VehicleconfirmController extends Controller
         $user_db = $this->getUser($data['userToken']);
         $action = $data['action'];
         $path_image = $data['path'];
-        // return $user_db['_id'] ;
+        
         $data = [
-            $action=>$path_image
+            $action=>$path_image,
+            'updateAt'=>date("Y-m-d H:i:s"),
         ];
-        $user = DB::table('vehicles')->where('user_id',$user_db['_id'])->update($data);
-        if($user){
+        $this->removePicture($action,$user_db['_id']);
+        $vehicles = DB::table('vehicles')->where('user_id',$user_db['_id'])->first();
+        if($vehicles){
             return response()->json([
                 'status'=>200,
                 'msg'=>'Upload success-update',
  
             ]);
         }else{
-            // $add_user_id = array('user_id'=>$user_db['_id']);
+            
             $data = [
                 $action=>$path_image,
-                'user_id'=>$user_db['_id']
+                'user_id'=>$user_db['_id'],
+                'createAt'=>date("Y-m-d H:i:s"),
+                'approveDate'=> "pending"
             ];
-            // array_push($data,$add_user_id);
-            // $data = [
-            //     $data['action']=>$data['path'],
-            //     'user_id'=>$user_db['_id']
-            // ];
-            // return response()->json($data_insert);
-            // die;
+           
             $user1 = DB::table('vehicles')->where('user_id',$user_db['_id'])->insert($data);
             if($user1){
                 return response()->json([
@@ -127,8 +71,53 @@ class VehicleconfirmController extends Controller
         }
     }
 
+    private function removePicture($action,$_id)
+    {
+        $vehicles = DB::table('vehicles')->where([['user_id',$_id],])->first();
+        
+        @unlink(public_path($vehicles[$action]));
+    }
+    private function multiupdateImage($data)
+    {
+        $user_db = $this->getUser($data['userToken']);
+        
+        $action = $data['action'];
+        $path_image = $data['path'];
+        $vehicles = DB::table('vehicles')->where('user_id',$user_db['_id'])->first();
 
-
+        if($vehicles){
+            $data_update = [];
+            $user1 = DB::table('vehicles')
+                            ->where([
+                                ['user_id',$user_db['_id']],
+                                
+                            ])
+                            ->push( 'vehicleDetailPicture',$path_image);
+                            
+            if($user1){
+                return response()->json([
+                    'status'=>200,
+                    'msg'=>'Upload success multi-push',
+     
+                ]); 
+            }
+        }else{
+            $path_image_arr = array($path_image);
+            $data_insert = [
+                $action=>$path_image_arr,
+                'user_id'=>$user_db['_id'],
+                'createAt'=>date("Y-m-d H:i:s"),
+            ];
+            
+            $vehicles_insert = DB::table('vehicles')->insert($data_insert);
+            if($vehicles_insert){
+                return response()->json([
+                    'status'=>200,
+                    'msg'=>'Upload success multi-insert',
+                ]); 
+            }
+        }
+    }
     private function uploadImageCenter($data)
     {
         $filename = $this->randomName($data);
@@ -140,14 +129,17 @@ class VehicleconfirmController extends Controller
             'action'=>$data->input('action'),
             'userToken'=>$data->input('userToken')
         ];
-        return $this->updateImage($data_update);
-
-        // return response()->json($path, 200);
+        
+        $action = $data->input('action');
+        if($action=="vehicleDetailPicture"){
+            return $this->multiupdateImage($data_update);
+        } else {
+             return $this->updateImage($data_update);
+        }
     }
 
     public function uploadvehicleImage(Request $request)
     {
-        $driverlicense = $request->file('driverlicense');
         $userToken = $request->input('userToken');
         if ($this->comparetoken($userToken) === false) {
             return response()->json([
@@ -156,43 +148,7 @@ class VehicleconfirmController extends Controller
             ]);
             exit;
         }
-
-        // $action = $request->input('action');
-        // if($action=='driverLicensePicture'){
-        
         return $this->uploadImageCenter($request);
-            // return response()->json(now(), 200);
-        // }
-        
-
-    //     die;
-    //     $user = DB::table('users')->where('userToken', $userToken)->first();
-
-    //     @unlink(public_path($user['driverLicensePicture']));
-    //     $driverlicense = $request->file('driverlicense');
-    //     $new_name = rand() . '.' . $request->driverlicense->extension();
-    //     $path_image = "/images/vehicleprofile//155" . $new_name;
-    //     $driverlicense->move("images/vehicleprofile/155/", $new_name);
-
-    //     $insert = DB::table('vehicles')->insert([
-    //         'driverLicensePicture' => $path_image, 'user_id' => $user['_id']
-    //     ]);
-        
-    
-    //     if( $insert){
-    //             return response()->json([
-    //                'status'=>200,
-    //                'msg'=>'Upload success'   
-    //            ]);
-            
-    //     } else {
-    //         return response()->json([
-    //             'status' => 500,
-    //             'msg' => 'Upload Failed',
-    //         ]);
-    //     }
-
-        
-
      }
+    
 }
