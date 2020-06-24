@@ -6,128 +6,131 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 use Image;
+use App\Http\Controllers\api\RegisterController;
 
 class PersonalpictureController extends Controller
 {
-
-    function userpicture(Request $request)
+    private function comparetoken($token)
     {
-        $uPicture = $request->file('uPicture');
-        $userToken = $request->input('userToken');
+        $RegisterController = new RegisterController();
+        return $RegisterController->comparetoken($token);
+    }
+    
+    private function randomName($request)
+    {
+        return  rand(). '.' . $request->picture->extension(); 
+    }
 
+    private function getUser($userToken){
         $user = DB::table('users')->where('userToken',$userToken)->first();
-
-        if($user){
-            if($userToken == $user['userToken']){
-                @unlink(public_path( $user['userPicture']));//unlink เลือกไฟล์ที่อยู่ในก้อนข้อข้อมูล$user ที่ฟิล userPicture ทำให้ลบข้อมูลเดิมก่อนที่จะอัพข้อมูลใหม่เข้าไป
-                $uPicture = $request->file('uPicture');
-                
-                $new_name =  rand() . '.' .$request->uPicture->extension();
-               
-                $path_image = "/images/user/".$new_name;
-                 $uPicture->move("images/user/", $new_name);
-
-                 $img = Image::make(public_path($path_image));
-                 $img->insert(public_path('images/watermark/watermark.png'), 'center');
-                 $img->save(public_path($path_image));
-
-                 $update=DB::table('users')->where('userToken',$userToken)->update([
-                        'userPicture'=>$path_image 
-                        ]);
-                        if($update){
-                            return response()->json([
-                               'status'=>200,
-                               'msg'=>'Upload success'   
-                           ]);
-                        }
-            }else{
-                return response()->json([
-                    'status'=>500,
-                    'msg'=>'Upload Failed',
-                ]);
-            }
-        }else{
-            return response()->json([
-                'status'=>404,
-                'msg'=>'usertoken not found',
-                
-            ]);
-        }
+        return $user;
         
     }
 
-    public function personalpicture(Request $request)
+    private function pathFile($request)
     {
-
-        $perPicture = $request->file('perPicture');
-        $userToken = $request->input('userToken');
         
-        $user = DB::table('users')->where('userToken',$userToken)->first();
-
-        if($user){
-            if($userToken == $user['userToken']){
-                @unlink(public_path( $user['personalPicture']));//unlink เลือกไฟล์ที่อยู่ในก้อนข้อข้อมูล$user ที่ฟิล userPicture ทำให้ลบข้อมูลเดิมก่อนที่จะอัพข้อมูลใหม่เข้าไป
-                $perPicture = $request->file('perPicture');//รับไฟล์มาจากหน้าบ้าน
-                $new_name =  rand() . '.' .$request->perPicture->extension();//เปลี่ยนชื่อ
-                $path_image = "/images/personal/".$new_name;//กำหนดพาท
-                $perPicture->move("images/personal/", $new_name);//ย้ายรูปไปยังพาท
-
-                $img = Image::make(public_path($path_image));
-                $img->insert(public_path('images/watermark/watermark.png'), 'center');
-                $img->save(public_path($path_image));
-
-                 $update=DB::table('users')->where('userToken',$userToken)->update([
-                        'personalPicture'=>$path_image 
-                        ]);
-                        if($update){
-                            return response()->json([
-                               'status'=>200,
-                               'msg'=>'Upload success'   
-                           ]);
-                        }
-            }else{
-                return response()->json([
-                    'status'=>500,
-                    'msg'=>'Upload Failed',
-                ]);
-            }
-        }else{
-            return response()->json([
-                'status'=>404,
-                'msg'=>'usertoken not found',
-            ]);
-        }
+        $profile = $request->input('action');
+        $username = $this->getUser($request->header('userToken'));
+        $path_image = "/images/".$profile.'/';
+        return $path_image;
     }
 
-    public function checkupload(Request $request)
+    private function updateImage($data)
     {
-        $userToken = $request->input('userToken');
-        $user = DB::table('users')->where('userToken',$userToken)->first();
-        $userPicture =  empty($user['userPicture']) ?null:$user['userPicture']; // ทำให้ค่าว่างเปลี่ยนเป็น null ถ้าเป็นจริง
-        $personalPicture = empty($user['personalPicture']) ?null:$user['personalPicture'];
-
-        if(!$user){
-            return response()->json([
-                'status'=>404,
-                'msg'=>'usertoken not found',
-            ]);exit;
-        }
-        if($userPicture==null || $personalPicture==null){
-            
-            return response()->json([
-                'status'=>404,
-                'msg'=>'upload fail',
-                
-            ]);  
-         }
-        else{
+        $user_db = $this->getUser($data['userToken']);
+        $action = $data['action'];
+        $path_image = $data['path'];
+        
+        $data = [
+            $action=>$path_image,
+            'updateAt'=>date("Y-m-dTH:i:s\Z"),
+        ];
+        // $this->removePicture($action,$user_db['userToken']);
+        @unlink(public_path( $user_db['userPicture']));
+        
+        $user_update = DB::table('users')->where('userToken',$user_db['userToken'])->update($data);
+        
+        if($user_update){
             return response()->json([
                 'status'=>200,
-                'msg'=>'all upload success',
+                'msg'=>'Upload success-update',
+ 
+            ]);
+        }else {
+            return response()->json([
+                'status'=>500,
+                'msg'=>'upload failed',
+ 
             ]);
         }
+    }
+
+    // private function removePicture($action,$userToken)
+    // {
+        
+       
+    //     $user_re = DB::table('users')->where([['userToken',$userToken],])->first();
+    //     return $user_re;
+    //     die;
+        
+    //     @unlink(public_path($user_re[$action]));
+    // }
+
+    
+    private function userImageCenter($data)
+    {
+        $filename = $this->randomName($data);
+        $path = $this->pathFile($data);
+        $path_image = $path.$filename;
+        $moveImage = $data->file('picture')->move(public_path($path),$filename);
+
+        $img = Image::make(public_path($path_image));
+        $img->insert(public_path('images/watermark/watermark.png'), 'center');
+        $img->save(public_path($path_image));
+        
+        $data_update = [
+            'path'=>$path_image,
+            'action'=>$data->input('action'),
+            'userToken'=>$data->header('userToken')
+        ];
+        
+        $action = $data->input('action');
+        
+             return $this->updateImage($data_update);
         
     }
 
+    public function uploaduserImage(Request $request)
+    {
+        $userToken = $request->header('userToken');
+        if ($this->comparetoken($userToken) === false) {
+            return response()->json([
+                'status' => 404,
+                'msg' => 'token is not found',
+            ]);
+            exit;
+        }
+        return $this->userImageCenter($request);
+     }
+
+    public function checkupload(Request $request)
     
+    {
+        $userToken = $request->header('userToken');
+        
+        if ($this->comparetoken($userToken) === false) {
+            return response()->json([
+                'status' => 404,
+                'msg' => 'token is not found',
+            ]);
+            exit;
+        }
+        return response()->json([
+                    
+            'status'=>200,
+            'msg'=>'all upload success',
+          
+        ]); 
+    }
 }
