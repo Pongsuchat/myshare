@@ -15,8 +15,8 @@ class LoginController extends Controller
     public function token_jwt()
     {
         $payload = array(
-            "iss" => "myshare",
-            "aud" => "myshare",
+            "iss" => "rand()",
+            "aud" => "rand()",
             "iat" => date("now"), //เวลาเริ่มต้น
             "exp" => time() + 60,
         );
@@ -29,11 +29,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
 
-        // $validatedData = $request->validate([
-        //     'phoneNumber' => 'required',
-        //     'password' => 'required',
-        // ]);
-        
+
         $json = $request->json()->all();
         $phoneNumber = $json['phoneNumber'];
         $password = $json['password'];
@@ -41,10 +37,19 @@ class LoginController extends Controller
         $token = $this->token_jwt();
 
         $data = [
-            //เก็บรูปแบบข้อมูลที่รับมาเป็น array
+            
             'deviceToken' => $deviceToken,
             'userToken' => $token,
         ];
+
+        if($phoneNumber==null || $password==null || $deviceToken==null ){
+
+            return response()->json([
+                'status'=>500,
+                'msg'=>'some input is null',
+                
+            ]);exit; 
+        }
 
         $user = DB::table('users')->where('phoneNumber', $phoneNumber)->first();
 
@@ -58,7 +63,7 @@ class LoginController extends Controller
                 return response()->json([
                     'status' => 200,
                     'msg' => 'success',
-                    'usertoken' => $token, //$new_user['userToken'] //ส่งโทเคนไปหลังจากสมัครเสร็จ 'ชื่อที่สื่อกับหน้าบ้าน' => ตัวแปลที่ประกาศตอนจะquery->ชื่อฟีิล
+                    'usertoken' => $token, 
                 ]);
 
             } else {

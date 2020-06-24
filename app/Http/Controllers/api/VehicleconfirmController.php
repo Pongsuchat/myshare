@@ -13,22 +13,26 @@ class VehicleconfirmController extends Controller
 
     private function comparetoken($token)
     {
+        //ฟังกืชั่นเทียบ token มีใน DB ไหม
         $RegisterController = new RegisterController();
         return $RegisterController->comparetoken($token);
     }
     
     private function randomName($request)
     {
+        //เปลี่ยนชื่อรูป
         return  rand(). '.' . $request->picture->extension(); 
     }
 
     private function getUser($userToken){
+        //ดึงข้อมูลจาก DB ออกมาโดยใช้ token เทียบ
         $user = DB::table('users')->where('userToken',$userToken)->first();
         return $user;
     }
 
     private function pathFile($request)
     {
+        
         $username = $this->getUser($request->input('userToken'));
         $path_image = "/images/vehicleprofile/".$username['userName'].'/';
         return $path_image;
@@ -42,7 +46,7 @@ class VehicleconfirmController extends Controller
         
         $data = [
             $action=>$path_image,
-            'updateAt'=>date("Y-m-d H:i:s"),
+            'updateAt'=>date("Y-m-dTH:i:s\Z"),
         ];
         $this->removePicture($action,$user_db['_id']);
         $vehicles = DB::table('vehicles')->where('user_id',$user_db['_id'])->update($data);
@@ -57,7 +61,7 @@ class VehicleconfirmController extends Controller
             $data = [
                 $action=>$path_image,
                 'user_id'=>$user_db['_id'],
-                'createAt'=>date("Y-m-d H:i:s"),
+                'createAt'=>date("Y-m-dTH:i:s\Z"),
                 
             ];
            
@@ -107,7 +111,7 @@ class VehicleconfirmController extends Controller
             $data_insert = [
                 $action=>$path_image_arr,
                 'user_id'=>$user_db['_id'],
-                'createAt'=>date("Y-m-d H:i:s"),
+                'createAt'=>date("Y-m-dTH:i:s\Z"),
             ];
             
             $vehicles_insert = DB::table('vehicles')->insert($data_insert);
@@ -172,8 +176,6 @@ class VehicleconfirmController extends Controller
         $usercheck = DB::table('users')->where('userToken',$userToken)->first();
         $vehicle_user = DB::table('vehicles')->where('user_id',$usercheck['_id'])->first();
 
-       
-
         $vehiclePicture =  empty($vehicle_user['vehiclePicture']) ?null:$vehicle_user['vehiclePicture']; // ทำให้ค่าว่างเปลี่ยนเป็น null ถ้าเป็นจริง
         $personalCardPicture =  empty($vehicle_user['personalCardPicture']) ?null:$vehicle_user['personalCardPicture'];
         $driverLicensePicture =  empty($vehicle_user['driverLicensePicture']) ?null:$vehicle_user['driverLicensePicture'];
@@ -186,7 +188,7 @@ class VehicleconfirmController extends Controller
         || $insurancePicture==null || $vehicleDetailPicture==null){
             
             return response()->json([
-                'status'=>404,
+                'status'=>500,
                 'msg'=>'upload failed',
                 
             ]);  
