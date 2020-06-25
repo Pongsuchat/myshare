@@ -26,7 +26,7 @@ Route::Post('comparetoken','api\RegisterController@comparetoken');
 Route::POST('login', 'api\LoginController@login');
 
 Route::POST('uploaduserImage', 'api\PersonalpictureController@uploaduserImage');//route รูปประจำตัว
-Route::POST('personalpicture', 'api\PersonalpictureController@personalpicture');//route รูปบัตรประชาชน
+// Route::POST('personalpicture', 'api\PersonalpictureController@personalpicture');//route รูปบัตรประชาชน
 Route::POST('checkupload', 'api\PersonalpictureController@checkupload');
 
 Route::POST('checkvehicleupload', 'api\VehicleconfirmController@checkvehicleupload');

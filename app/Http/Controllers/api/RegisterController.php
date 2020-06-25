@@ -20,7 +20,7 @@ class RegisterController extends Controller
             "exp" => time() + 60,
         
         );
-        $privatekey = File::get(storage_path() . '\key\private.key'); //ไปอ่านไฟล์key
+        $privatekey = File::get(storage_path() . '/key/private.key'); //ไปอ่านไฟล์key
         $jwt = JWT::encode($payload, $privatekey, 'RS256');
         // $publicKey = File::get(storage_path() . '\key\public.key');
         // $decoded = JWT::decode($jwt, $publicKey, array('RS256'));
@@ -85,6 +85,7 @@ class RegisterController extends Controller
             'deviceToken' => $deviceToken,
             'userToken' => $token,
             'role' => "Normal User",
+            'status' => "New user",
             'created' => date("Y-m-dTH:i:s\Z"),
         
         ];

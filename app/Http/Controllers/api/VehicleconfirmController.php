@@ -228,7 +228,6 @@ class VehicleconfirmController extends Controller
 
         return response()->json([
             'status' => 200,
-            'msg' => ' found',
             'vehecle Number' => $vehicles->count(),
             'vehecle data' => $vehicles,
         ]);

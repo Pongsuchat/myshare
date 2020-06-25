@@ -39,7 +39,7 @@ else
         <th scope="col" class="text-left">ชื่อ-นามสกุล</th>
         <th scope="col" class="text-left">เบอร์ติดต่อ</th>
         <th scope="col" class="text-left">ระดับ</th>
-        <th scope="col" class="text-left">สถานะ</th>
+        <th scope="col" class="text-left">สถานะรถยนต์</th>
 
         <th scope="col" class="text-center">การจัดการ</th>
       </tr>

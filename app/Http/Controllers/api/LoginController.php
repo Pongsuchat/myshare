@@ -20,7 +20,7 @@ class LoginController extends Controller
             "iat" => date("now"), //เวลาเริ่มต้น
             "exp" => time() + 60,
         );
-        $privatekey = File::get(storage_path() . '\key\private.key'); //ไปอ่านไฟล์key
+        $privatekey = File::get(storage_path() . '/key/private.key'); //ไปอ่านไฟล์key
         $jwt = JWT::encode($payload, $privatekey, 'RS256');
         return $jwt;
 
