@@ -35,10 +35,11 @@ else
   <table class="table" id="myTable">
     <thead>
       <tr>
+        <th scope="col" class="text-left">รูปโปรไฟล์</th>
         <th scope="col" class="text-left">ชื่อ-นามสกุล</th>
-        <th scope="col" class="text-left">รหัสประเทศ</th>
         <th scope="col" class="text-left">เบอร์ติดต่อ</th>
         <th scope="col" class="text-left">ระดับ</th>
+        <th scope="col" class="text-left">สถานะ</th>
 
         <th scope="col" class="text-center">การจัดการ</th>
       </tr>
@@ -49,10 +50,11 @@ else
     <tbody>
       <tr>
         {{-- {{id}} --}}
+        <td><img src="{{$data->userPicture}}" width="80px" height="80"></td>
         <td>{{$data->userName}}</td>
-        <td>{{$data->countryCode}}</td>
         <td>{{$data->phoneNumber}}</td>
         <td>{{$data->role}}</td>
+        <td>{{$data->status}}</td>
 
         <td class="layout-text-center">
   

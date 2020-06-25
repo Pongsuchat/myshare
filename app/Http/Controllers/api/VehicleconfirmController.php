@@ -193,45 +193,48 @@ class VehicleconfirmController extends Controller
         $usercheck = DB::table('users')->where('userToken',$userToken)->first();
         $vehicle_user = DB::table('vehicles')->where('user_id',$usercheck['_id'])->first();
 
-        // $vehiclePicture =  empty($vehicle_user['vehiclePicture']) ?null:$vehicle_user['vehiclePicture']; // ทำให้ค่าว่างเปลี่ยนเป็น null ถ้าเป็นจริง
-        // $personalCardPicture =  empty($vehicle_user['personalCardPicture']) ?null:$vehicle_user['personalCardPicture'];
-        // $driverLicensePicture =  empty($vehicle_user['driverLicensePicture']) ?null:$vehicle_user['driverLicensePicture'];
-        // $actPicture =  empty($vehicle_user['actPicture']) ?null:$vehicle_user['actPicture'];
-        // $registrationPicture =  empty($vehicle_user['registrationPicture']) ?null:$vehicle_user['registrationPicture'];
-        // $insurancePicture =  empty($vehicle_user['insurancePicture']) ?null:$vehicle_user['insurancePicture'];
-        // $vehicleDetailPicture =  empty($vehicle_user['vehicleDetailPicture']) ?null:$vehicle_user['vehicleDetailPicture'];
-        
-        // if($vehiclePicture==null || $personalCardPicture==null || $driverLicensePicture==null || $actPicture==null || $registrationPicture==null
-        // || $insurancePicture==null || $vehicleDetailPicture==null){
-            
-        //     return response()->json([
-        //         'status'=>500,
-        //         'msg'=>'upload failed',
-                
-        //     ]);  
-        //  }
-        // else{
-
             $status = [
                 'status'=> "pending"
             ];
             $usert_status = DB::table('users')->where('userToken',$userToken)->update($status);
             $vehicles_status = DB::table('vehicles')->where('user_id',$usercheck['_id'])->update($status);
 
-            // if($vehicles_status){
+            
                 return response()->json([
                     
                     'status'=>200,
                     'msg'=>'all upload success pending to approval',
                   
                 ]); 
-             //}
-
-            
-        //}
         
     }
 
      
+    public function checkvehicleNumeber(Request $request)
+    {
+        //เช็คว่ามีรถยังถ้ามีๆกี่คัน
+        $userToken = $request->header('userToken');
+
+        if ($this->comparetoken($userToken) === false) {
+            return response()->json([
+                'status' => 404,
+                'msg' => 'token is not found',
+            ]);
+            exit;
+        }
+
+        $usert_status = DB::table('users')->where('userToken',$userToken)->first();
+        $vehicles = DB::table('vehicles')->where('user_id',$usert_status['_id'])->get();
+
+        return response()->json([
+            'status' => 200,
+            'msg' => ' found',
+            'vehecle Number' => $vehicles->count(),
+            'vehecle data' => $vehicles,
+        ]);
+        
+
+        
+    }
     
 }

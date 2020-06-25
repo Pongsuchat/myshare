@@ -84,6 +84,7 @@ class RegisterController extends Controller
             'password' => Hash::make($password),
             'deviceToken' => $deviceToken,
             'userToken' => $token,
+            'role' => "Normal User",
             'created' => date("Y-m-dTH:i:s\Z"),
         
         ];

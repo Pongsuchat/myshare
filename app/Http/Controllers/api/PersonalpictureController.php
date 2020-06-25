@@ -47,7 +47,7 @@ class PersonalpictureController extends Controller
             'updateAt'=>date("Y-m-dTH:i:s\Z"),
         ];
         // $this->removePicture($action,$user_db['userToken']);
-        @unlink(public_path( $user_db['userPicture']));
+        @unlink(public_path( $user_db[$action]));
         
         $user_update = DB::table('users')->where('userToken',$user_db['userToken'])->update($data);
         
