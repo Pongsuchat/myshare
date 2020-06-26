@@ -205,35 +205,8 @@ class VehicleconfirmController extends Controller
                     'status'=>200,
                     'msg'=>'all upload success pending to approval',
                   
-                ]); 
+                ]); exit;
         
     }
 
-     
-    public function checkvehicleNumeber(Request $request)
-    {
-        //เช็คว่ามีรถยังถ้ามีๆกี่คัน
-        $userToken = $request->header('userToken');
-
-        if ($this->comparetoken($userToken) === false) {
-            return response()->json([
-                'status' => 404,
-                'msg' => 'token is not found',
-            ]);
-            exit;
-        }
-
-        $usert_status = DB::table('users')->where('userToken',$userToken)->first();
-        $vehicles = DB::table('vehicles')->where('user_id',$usert_status['_id'])->get();
-
-        return response()->json([
-            'status' => 200,
-            'vehecle Number' => $vehicles->count(),
-            'vehecle data' => $vehicles,
-        ]);
-        
-
-        
-    }
-    
 }

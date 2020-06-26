@@ -46,7 +46,7 @@ class PersonalpictureController extends Controller
             $action=>$path_image,
             'updateAt'=>date("Y-m-dTH:i:s\Z"),
         ];
-        // $this->removePicture($action,$user_db['userToken']);
+      
         @unlink(public_path( $user_db[$action]));
         
         $user_update = DB::table('users')->where('userToken',$user_db['userToken'])->update($data);
@@ -66,17 +66,7 @@ class PersonalpictureController extends Controller
         }
     }
 
-    // private function removePicture($action,$userToken)
-    // {
-        
-       
-    //     $user_re = DB::table('users')->where([['userToken',$userToken],])->first();
-    //     return $user_re;
-    //     die;
-        
-    //     @unlink(public_path($user_re[$action]));
-    // }
-
+   
     
     private function userImageCenter($data)
     {
@@ -126,11 +116,58 @@ class PersonalpictureController extends Controller
             ]);
             exit;
         }
+
+        $user = DB::table('users')->where('userToken',$userToken)->first();
+        
+        $status = [
+            'images_status'=> "success"
+            'updateAt'=>date("Y-m-dTH:i:s\Z"),
+            
+        ];
+        $usert_status = DB::table('users')->where('userToken',$userToken)->update($status);
+       
         return response()->json([
-                    
-            'status'=>200,
-            'msg'=>'all upload success',
+
+            'status' => 200,
+            'msg' => 'all upload success',
           
         ]); 
+    }
+
+    public function checkStatus(Request $request)
+    {
+        $userToken = $request->header('userToken');
+        
+        if ($this->comparetoken($userToken) === false) {
+            return response()->json([
+                'status' => 404,
+                'msg' => 'token is not found',
+            ]);
+            exit;
+        }
+        
+        $usert_status = DB::table('users')->where('userToken',$userToken)->first();
+        $vehicles = DB::table('vehicles')->where('user_id',$usert_status['_id'])->get();
+        
+       if($usert_status['images_status']=='success'){
+
+        return response()->json([
+            'status' => 200,
+            'msg' => 'success',
+            'vehicleNumber' =>$vehicles->count(),
+            'vehicledata' => $vehicles,
+        ]);
+
+       }else{
+
+        return response()->json([
+            'status' => 500,
+            'msg' => 'failed',
+            'vehicleNumber' =>$vehicles->count(),
+            'vehicledata' => $vehicles,
+        ]);
+
+       }
+
     }
 }

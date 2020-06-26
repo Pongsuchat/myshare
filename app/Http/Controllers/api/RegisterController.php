@@ -86,6 +86,7 @@ class RegisterController extends Controller
             'userToken' => $token,
             'role' => "Normal User",
             'status' => "New user",
+            'images_status'=> "waiting",
             'created' => date("Y-m-dTH:i:s\Z"),
         
         ];
