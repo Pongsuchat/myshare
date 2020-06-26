@@ -120,7 +120,7 @@ class PersonalpictureController extends Controller
         $user = DB::table('users')->where('userToken',$userToken)->first();
         
         $status = [
-            'images_status'=> "success"
+            'images_status'=> "success",
             'updateAt'=>date("Y-m-dTH:i:s\Z"),
             
         ];
