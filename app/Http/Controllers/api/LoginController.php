@@ -33,16 +33,16 @@ class LoginController extends Controller
         $json = $request->json()->all();
         $phoneNumber = $json['phoneNumber'];
         $password = $json['password'];
-        $deviceToken = $json['deviceToken'];
+        // $deviceToken = $json['deviceToken'];
         $token = $this->token_jwt();
 
         $data = [
             
-            'deviceToken' => $deviceToken,
+            // 'deviceToken' => $deviceToken,
             'userToken' => $token,
         ];
 
-        if($phoneNumber==null || $password==null || $deviceToken==null ){
+        if($phoneNumber==null || $password==null){
 
             return response()->json([
                 'status'=>500,
@@ -57,7 +57,7 @@ class LoginController extends Controller
             if (Hash::check($password, $user['password'])) {
 
                 $update = DB::table('users')->where('phoneNumber', $phoneNumber)->update([
-                    'userToken' => $token, 'deviceToken' => $deviceToken,
+                    'userToken' => $token, //'deviceToken' => $deviceToken,
                 ]);
 
                 return response()->json([

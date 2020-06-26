@@ -61,6 +61,8 @@ class VehicleconfirmController extends Controller
             $data = [
                 $action=>$path_image,
                 'user_id'=>$user_db['_id'],
+                'status'=> "waiting",
+                'image_status'=> "waiting",
                 'createAt'=>date("Y-m-dTH:i:s\Z"),
                 
             ];
@@ -120,6 +122,8 @@ class VehicleconfirmController extends Controller
             $data_insert = [
                 $action=>$path_image_arr,
                 'user_id'=>$user_db['_id'],
+                'status'=> "waiting",
+                'image_status'=> "waiting",
                 'createAt'=>date("Y-m-dTH:i:s\Z"),
             ];
             
@@ -194,7 +198,8 @@ class VehicleconfirmController extends Controller
         $vehicle_user = DB::table('vehicles')->where('user_id',$usercheck['_id'])->first();
 
             $status = [
-                'status'=> "pending"
+                'status'=> "pending",
+                'image_status'=> "success",
             ];
             $usert_status = DB::table('users')->where('userToken',$userToken)->update($status);
             $vehicles_status = DB::table('vehicles')->where('user_id',$usercheck['_id'])->update($status);

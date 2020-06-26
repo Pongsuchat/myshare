@@ -73,7 +73,7 @@ class RegisterController extends Controller
         $userName = $json['userName'];
         $phoneNumber = $json['phoneNumber'];
         $password = $json['password'];
-        $deviceToken = $json['deviceToken'];
+        // $deviceToken = $json['deviceToken'];
         $token = $this->token_jwt();
         
 
@@ -82,7 +82,7 @@ class RegisterController extends Controller
             'userName' => $json['userName'],
             'phoneNumber' => $json['phoneNumber'],
             'password' => Hash::make($password),
-            'deviceToken' => $deviceToken,
+            // 'deviceToken' => $deviceToken,
             'userToken' => $token,
             'role' => "Normal User",
             'status' => "New user",
@@ -91,7 +91,7 @@ class RegisterController extends Controller
         
         ];
 
-        if($userName==null || $phoneNumber==null || $password==null || $deviceToken==null ){
+        if($userName==null || $phoneNumber==null || $password==null){
 
             return response()->json([
                 'status'=>500,

@@ -153,7 +153,7 @@ class PersonalpictureController extends Controller
 
         return response()->json([
             'status' => 200,
-            'msg' => 'success',
+            'msg' => 'true',
             'vehicleNumber' =>$vehicles->count(),
             'vehicledata' => $vehicles,
         ]);
