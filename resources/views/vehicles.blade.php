@@ -9,6 +9,7 @@
 
 <div class="col-md-2">
   @include('leftmenu')
+  {{-- <a href="{{url('adminview')}}">Link</a> --}}
 </div>
 <div class="col-md-10 shadow p-3  rounded">
 
@@ -33,7 +34,7 @@
       </tr>
     </thead>
 @php
-    // dd($allvehicles);
+    
 @endphp
 
     @foreach($allvehicles as $data)
@@ -41,7 +42,7 @@
     <tbody>
       <tr>
 
-        {{-- <td>{{$data->userName}}</td> --}}
+        
         <td><img src="{{asset($data['vehiclePicture'])}}" width="150px" height="150px"></td>
         <td><img src="{{$data->personalCardPicture}}" width="150px" height="150px"></td>
         <td><img src="{{$data->driverLicensePicture}}" width="150px" height="150px"></td>

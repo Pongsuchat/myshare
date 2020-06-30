@@ -1,52 +1,48 @@
 <div style="height: 100%;background-color: #28252c;" class="shadow-lg p-3  rounded">
-  <table class="table">
-    <tbody>
-      <tr class="btn-group dropright">
-        <td class="btn-nav layout-al-center dropdown-toggle" style="border-top: none !important;" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-user-o mr-2 icon-leftmenu" aria-hidden="true"></i>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <button class="dropdown-item dropdown-item1" type="button"><i class="fa fa-user-circle mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการผู้ดูแลระบบ</button>
-            <button class="dropdown-item dropdown-item1" type="button"><i class="fa fa-users mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการผู้ใช้งานทั่วไป</button>
-            
-          </div>
 
-          จัดการผู้ใช้งาน
-        </td>
-      </tr>
-      <tr class="btn-group dropright">
-        <td class="btn-nav layout-al-center dropdown-toggle" style="border-top: none !important;" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-globe mr-2 icon-leftmenu" aria-hidden="true"></i>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <button class="dropdown-item dropdown-item1" type="button" ><i class="fa fa-map mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการทริปเที่ยว</button>
-            <button class="dropdown-item dropdown-item1" type="button"><i class="fa fa-truck mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการการส่งของ</button>
-            
-          </div>
-
-          จัดการทริป
-        </td>
-      </tr>
-    </tr>
-    <tr class="btn-group dropright">
-      <td class="btn-nav layout-al-center dropdown-toggle" style="border-top: none !important;" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fa fa-bars mr-2 icon-leftmenu" aria-hidden="true"></i>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-          <button class="dropdown-item dropdown-item1" type="button"><i class="fa fa-picture-o mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการรูปภาพ</button>
-          <button class="dropdown-item dropdown-item1" type="button"><i class="fa fa-text-width mr-2 icon-leftmenu" aria-hidden="true"></i>จัดการข้อความแสดงผล</button>
-          
+  <div class="accordion   rounded" id="accordionExample">
+    <div class="" style="width: 100% !important;">
+      <div class="" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link-left btn-block text-left " type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <i class="fa fa-user-o" aria-hidden="true" style="margin-right: 5px;"></i>
+            จัดการผู้ใช้งาน
+          </button>
+        </h2>
+      </div>
+  
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="ml-4" style="display: flex; flex-direction: row;align-items: center;">
+            <i class="fa fa-user-circle" aria-hidden="true" style="color: #fff;"></i>
+            <a class="dropdown-item-left" href="{{url('adminuser')}}" >ผู้ดูแลระบบ</a>
         </div>
+        <div class="ml-4" style="display: flex; flex-direction: row;align-items: center;">
+          <i class="fa fa-users" aria-hidden="true" style="color: #fff;"></i>
+          <a class="dropdown-item-left" href="{{url('narmoluser')}}" >ผู้ใช้งานทั่วไป</a>
+        </div>
+        
+      </div>
+    </div>
 
-        จัดการเมนู
-      </td>
-    </tr>
-      
-      <tr>
-        <td class="btn-nav layout-al-center" style="border-top: none !important;">
-          <i class="fa fa-trash mr-2 icon-leftmenu" aria-hidden="true"></i>
-          ถังขยะ
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <div class="" style="width: 100% !important;">
+      <div class="" id="headingTwo">
+        <h2 class="mb-0">
+          <button class="btn btn-link-left btn-block text-left " type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+           
+            <i class="fa fa-globe" aria-hidden="true" style="margin-right: 5px;"></i>
+            จัดการทริป
+          </button>
+        </h2>
+      </div>
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+        <div class="">
+          <a class="dropdown-item-left" href="{{url('dashboard')}}" >dashboard</a>
+                </div>
+      </div>
+    </div>
+
+    
+    
+  </div>
 </div>
-            
         

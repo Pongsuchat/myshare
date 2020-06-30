@@ -29,7 +29,8 @@ class LoginController extends Controller
             $user = DB::table('users')->where('phoneNumber',$phone)->first();
             if($user){
                 if(Hash::check($password, $user['password'])){
-                    $data = Users::all();
+                    // $data = Users::all();
+                    
                     // return view('index',['allusers'=>$data]);
                     // header( "dashboard" );
                     return redirect('dashboard');

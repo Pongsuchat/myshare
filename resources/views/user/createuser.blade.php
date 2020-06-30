@@ -50,6 +50,21 @@
                   <div class="col-md-3 mb-3">
                     <label for="validationServer04">ระดับ</label>
                     <input type="text" class="form-control " name="role" placeholder="ระดับ" required>
+                    <form  method="POST" action="{{url('/updatestatus')}}" >
+                      {{csrf_field()}}
+                   <div class="form-group col-md-10">
+                      <input type="hidden" name="id" value="{{$data->id}}">
+                      <select id="inputState" class="form-control" name="status">
+                        <option selected value="approve">approve</option>
+                        <option value="reject">reject</option>
+                        <option value="pending">pending</option>
+                      </select>
+      
+                      
+                    </div>
+                    <div class="col-md-4"><button type="submit" class="btn btn-primary">ยืนยัน</button></div>
+      
+                  </form>
                   </div>
                   <div class="col-md-3 mb-3">
                     <label for="validationServer05">รูปบัตรประชาชน</label>

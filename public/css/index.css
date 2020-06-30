@@ -65,3 +65,44 @@ div.card {
     background-color: #2e64cf !important;
     color: #d9e1ec !important;
   }
+
+  .btn-link-left {
+    font-weight: 400;
+    color: #fff !important;
+    text-decoration: none;
+    font-size: 18px !important;
+  }
+
+  .btn-link-left:hover {
+    color: #f3d80d !important;
+    
+  }
+
+  .dropdown-item-left {
+    display: block;
+    width: 100%;
+    padding: .25rem 1.5rem .25rem .5rem;
+    clear: both;
+    font-weight: 400;
+    color: #ffffff;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.dropdown-item-left:hover {
+  display: block;
+  width: 100%;
+  clear: both;
+  font-weight: 400;
+  color: #f3d80d !important;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  text-decoration: none;
+}
+

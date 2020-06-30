@@ -34,6 +34,8 @@ Route::POST('uploadvehicleImage', 'api\VehicleconfirmController@uploadvehicleIma
 Route::POST('multiuploadvehicleImage', 'api\VehicleconfirmController@multiuploadvehicleImage');
 // Route::GET('checkvehicleNumeber', 'api\VehicleconfirmController@checkvehicleNumeber');
 
+Route::POST('createtrip', 'api\CreatetripController@createtrip');
+
 
 
 

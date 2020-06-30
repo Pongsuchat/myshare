@@ -7,8 +7,8 @@
 <div class="row" style="height: 90vh;">
 
 <div class="col-md-2">
-  {{-- @include('leftmenu') --}}
-  <a href="asdfssdfsdf">link</a>
+  @include('leftmenu')
+  
 </div>
 <div class="col-md-10 shadow p-3  rounded">
 
@@ -48,12 +48,12 @@
 
         <td class="layout-text-center">
   
-        {{-- <a href="{{route('users.edit',$data->id)}}" type="button" data-toggle="modal" data-target="#modalEditUser"  >  --}}
+        <a href="{{route('users.edit',$data->id)}}" type="button" data-toggle="modal" data-target="#modalEditUser"  > 
           <i href="{{route('users.edit',$data->id)}}" type="button" class="fa fa-pencil mr-4 btn btn-outline-primary" aria-hidden="true" ></i></a>
           
           <a href="{{route('users.edit',$data->id)}}" type="button" class="btn btn-primary">แก้ไข</a>
 
-            {{-- <i class="fa fa-trash btn btn-outline-danger" aria-hidden="true" type="button" data-target="#modalDeleteUser"></i> --}}
+            <i class="fa fa-trash btn btn-outline-danger" aria-hidden="true" type="button" data-target="#modalDeleteUser"></i>
           
         </td>
       </tr>
@@ -70,9 +70,3 @@
 </div>
 </div>
 
-{{-- <script>
-  function setUpData (id, username, country, phonenumber, role) {
-    console.log(id, username, country, phonenumber, role);
-  }
-</script> --}}
-@endsection

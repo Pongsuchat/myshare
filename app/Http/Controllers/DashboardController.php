@@ -11,15 +11,15 @@ class DashboardController extends Controller
 {
    public function index()
    {
-    $alluser = Users::all();
-    $vehicles = Vehicles::all();
+   //  $alluser = Users::all();
+   //  $vehicles = Vehicles::all();
 
       // return $vehicles;
    //  return view('index',['allusers'=>$data]);
-   return view('vehicles',[
+   return view('view_menu/dashboard',[
       
-      'allvehicles'=>$vehicles,
-      'alluser' => $alluser
+      // 'allvehicles'=>$vehicles,
+      // 'alluser' => $alluser
    
    
    ]);

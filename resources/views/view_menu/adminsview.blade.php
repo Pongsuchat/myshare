@@ -7,8 +7,8 @@
 <div class="row" style="height: 90vh;">
 
 <div class="col-md-2">
-  {{-- @include('leftmenu') --}}
-  <a href="asdfssdfsdf">link</a>
+  @include('leftmenu')
+  {{-- <a href="asdfssdfsdf">link</a> --}}
 </div>
 <div class="col-md-10 shadow p-3  rounded">
 
@@ -29,7 +29,7 @@
         <th scope="col" class="text-left">ชื่อ-นามสกุล</th>
         <th scope="col" class="text-left">เบอร์ติดต่อ</th>
         <th scope="col" class="text-left">ระดับ</th>
-        <th scope="col" class="text-left">สถานะรถยนต์</th>
+        {{-- <th scope="col" class="text-left">สถานะรถยนต์</th> --}}
 
         <th scope="col" class="text-center">การจัดการ</th>
       </tr>
@@ -44,7 +44,7 @@
         <td>{{$data->userName}}</td>
         <td>{{$data->phoneNumber}}</td>
         <td>{{$data->role}}</td>
-        <td>{{$data->status}}</td>
+        {{-- <td>{{$data->status}}</td> --}}
 
         <td class="layout-text-center">
   
