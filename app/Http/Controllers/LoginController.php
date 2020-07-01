@@ -24,13 +24,22 @@ class LoginController extends Controller
         ]);
             $phone=$request->phoneNumber;
             $password = $request->input('password');
-            
+            // dd($request->input());
+            // die;
             // echo $password; die;
             $user = DB::table('users')->where('phoneNumber',$phone)->first();
             if($user){
                 if(Hash::check($password, $user['password'])){
                     // $data = Users::all();
-                    
+                    // dd($user);
+
+                    $data = [
+                        '_id'=>$user['_id'],
+                        'username'=>$user['userName'],
+                        'role'=>$user['role']
+                    ];
+                    session()->put('user', $data);
+                    // dd($dasta);
                     // return view('index',['allusers'=>$data]);
                     // header( "dashboard" );
                     return redirect('dashboard');
@@ -47,9 +56,10 @@ class LoginController extends Controller
         return view('index');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        Auth::logout();
+        // Auth::logout();
+        $request->session()->flush();
         return redirect('/');
     }
 }

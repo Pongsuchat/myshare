@@ -52,7 +52,7 @@ class CreateuserController extends Controller
         ]);
         $data->save();
         // if($insert){
-            return redirect('view_menu.adminsview');
+            return view('view_menu.adminsview');
         // }
     }
 

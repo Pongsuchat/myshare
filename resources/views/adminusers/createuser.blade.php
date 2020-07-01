@@ -1,15 +1,4 @@
-{{-- 
-  <div class="container">
-    @if ($error->all())
-    <ul>
-      @foreach ($errors->all() as $error)
-          <li>
-            {{$error}}
-          </li>
-      @endforeach
-  </ul>
-    @endif
-  </div> --}}
+
   
   
   <div class="modal fade" id="modalCreateUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -22,7 +11,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <form method="POST" action="{{url('users')}}">
+            <form method="POST" action="{{url('createuseradmin')}}">
 
                 {{csrf_field()}}
 
@@ -31,10 +20,10 @@
                     <label for="validationServer01">ชื่อ - นามสกุล</label>
                     <input type="text" class="form-control " name="userName" placeholder="ชื่อ - นามสกุล" value="" required>
                   </div>
-                  <div class="col-md-2 mb-3">
+                  {{-- <div class="col-md-2 mb-3">
                     <label for="validationServer02">รหัสประเทศ</label>
                     <input type="text" class="form-control " name="countryCode" placeholder="รหัสประเทศ" value="" required>
-                  </div>
+                  </div> --}}
                   <div class="col-md-4 mb-3">
                     <label for="validationServerUsername">เบอร์โทรศัพท์</label>
                     <div class="input-group">
@@ -47,25 +36,10 @@
                     <label for="validationServer03">Passwod</label>
                     <input type="text" class="form-control " name="password" placeholder="รหัสผ่าน" required>
                   </div>
-                  <div class="col-md-3 mb-3">
+                  {{-- <div class="col-md-3 mb-3">
                     <label for="validationServer04">ระดับ</label>
                     <input type="text" class="form-control " name="role" placeholder="ระดับ" required>
-                    <form  method="POST" action="{{url('/updatestatus')}}" >
-                      {{csrf_field()}}
-                   <div class="form-group col-md-10">
-                      <input type="hidden" name="id" value="{{$data->id}}">
-                      <select id="inputState" class="form-control" name="status">
-                        <option selected value="approve">approve</option>
-                        <option value="reject">reject</option>
-                        <option value="pending">pending</option>
-                      </select>
-      
-                      
-                    </div>
-                    <div class="col-md-4"><button type="submit" class="btn btn-primary">ยืนยัน</button></div>
-      
-                  </form>
-                  </div>
+                  </div> --}}
                   <div class="col-md-3 mb-3">
                     <label for="validationServer05">รูปบัตรประชาชน</label>
                     <input type="text" class="form-control " name="personalPicture" placeholder="เพิ่มไฟล์" >
