@@ -35,8 +35,10 @@ class AdminviewController extends Controller
     //         // ->join('orders', 'users.id', '=', 'orders.user_id')
     //         ->select('users.*', 'vehicles.*', 'orders.price')
     //         ->get();
-
-    // dd($user_detail);
+    // foreach ($allusers as $key => $value) {
+    //     echo $value['_id'],'<br>';
+    // }
+    // dd($allusers);
     // die;
 
     return view('view_menu.usersview',[
@@ -71,22 +73,24 @@ class AdminviewController extends Controller
 
    public function usersdetail(Request $request)
    {
-    $id = $request->input('id');
+    $id = $request->get('id');
+        
+    
+
+    $user_detail = DB::table('users')->where('_id',$id)->first();
+    $vehicles_detail = DB::table('vehicles')->where('user_id',$user_detail['_id'])->get();
     
   
-    $user_detail = DB::table('users')->where('id',$id)->first();
-    $vehicles_detail = DB::table('vehicles')->where('id',$id)->first();
-
-    
      return view('adminusers.detailuser',[
         
         'user_detail' => $user_detail,
         'vehicles_detail' => $vehicles_detail,
+        'vehicles_num' => $vehicles_detail->count()
+        
         
     
     ]);
 
-        // return redirect('adminusers.detailuser');
    }
 
 

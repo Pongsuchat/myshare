@@ -11,7 +11,7 @@
 
   <div class="col-md-10 shadow p-3  rounded">
 
-    <nav class="navbar navbar-light " style="background-color: #b8e8ee;margin-bottom: 1em;">
+    <nav class="navbar navbar-light shadow " style="background-color: #b8e8ee;margin-bottom: 1em;">
       <a class="navbar-brand">เจ้าหน้าที่</a>
 
 

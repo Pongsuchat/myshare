@@ -124,7 +124,7 @@ class PersonalpictureController extends Controller
             'updateAt'=>date("Y-m-dTH:i:s\Z"),
             
         ];
-        $usert_status = DB::table('users')->where('userToken',$userToken)->update($status);
+        $user_status = DB::table('users')->where('userToken',$userToken)->update($status);
        
         return response()->json([
 
