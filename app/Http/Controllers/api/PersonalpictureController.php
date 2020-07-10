@@ -5,7 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
-use Image;
+use Image,Str,Storage;
 use App\Http\Controllers\api\RegisterController;
 
 class PersonalpictureController extends Controller
@@ -73,6 +73,8 @@ class PersonalpictureController extends Controller
         $filename = $this->randomName($data);
         $path = $this->pathFile($data);
         $path_image = $path.$filename;
+
+    
         $moveImage = $data->file('picture')->move(public_path($path),$filename);
 
         $img = Image::make(public_path($path_image));
@@ -93,11 +95,70 @@ class PersonalpictureController extends Controller
 
     public function uploaduserImage(Request $request)
     {
+       
+       
+        // $image_64 = $request->input('picture');
+        
+        
+        // $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];
+        // $replace = substr($image_64, 0, strpos($image_64, ',')+1); 
+
+        // // find substring fro replace here eg: data:image/png;base64,
+
+        // $image = str_replace($replace, '', $image_64); 
+
+        // $image = str_replace(' ', '+', $image); 
+
+        // $imageName = Str::random(10).'.'.$extension;
+
+        
+        // $path_folder = public_path("images/dd/");
+       
+        // if (!file_exists( $path_folder))  
+        // { 
+        //     mkdir($path_folder, 0777, true);
+        // } 
+        
+        // // die;
+        // $path = $path_folder.$imageName;
+        // // $path_image = 'imagesz
+
+        // $img = Image::make($path_folder);
+        // $img->insert(public_path('images/watermark/watermark.png'), 'center');
+        // $img->save($path_folder);
+
+        // $status_upload = '';
+        // if(file_put_contents($path ,base64_decode($image))){
+        //     $status_upload = "Success!";
+        // }else{
+        //     $status_upload = "Unable to save the file.";
+        // }
+        // // ->move(public_path($path),$filename);
+
+        // // move_uploaded_file(base64_decode($image),public_path('images/').$imageName);
+        // // Storage::disk('images/64/')->put($imageName, base64_decode($image));
+        // return response()->json([
+        
+        //     // 'images' =>$image_64,
+        //     // 'decode'=>$image,
+        //     'path'=>$path,
+        //     'extension'=> $extension,
+        //     'imageName'=> $imageName,
+        //     'status_upload'=> $status_upload
+        // ]);
+        
+        
+        
+        // die;
+    
+       
+       
         $userToken = $request->header('userToken');
         if ($this->comparetoken($userToken) === false) {
             return response()->json([
                 'status' => 404,
                 'msg' => 'token is not found',
+                
             ]);
             exit;
         }
@@ -169,5 +230,11 @@ class PersonalpictureController extends Controller
 
        }
 
+    }
+
+
+    public function base64(Request $request)
+    {
+        
     }
 }

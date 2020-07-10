@@ -189,7 +189,7 @@ class VehicleconfirmController extends Controller
         if ($this->comparetoken($userToken) === false) {
             return response()->json([
                 'status' => 404,
-                'msg' => 'token is not found',
+                'msg' => ' is not found',
             ]);
             exit;
         }

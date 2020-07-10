@@ -46,7 +46,9 @@
         @endphp
         <tr>
 
-          <td><img src="{{$data->userPicture}}" width="80px" height="80"></td>
+          <td><a data-fancybox="gallery" href="{{$data->userPicture == null ? asset('images/system/nophoto.png'): $data->userPicture}}"><img
+            src="{{$data->userPicture == null ? asset('images/system/nophoto.png'): $data->userPicture}}" width="150px" height="100px"></a></td>
+          
           <td>{{$data->userName}}</td>
           <td>{{$data->phoneNumber}}</td>
 
@@ -54,13 +56,13 @@
 
 
           <td class="layout-text-center">
-
+            
             <form method="GET">
               {{csrf_field()}}
 
               <a type="submit" href="{{action('AdminviewController@usersdetail',"id=$id")}}">
 
-                <i class="fa fa-info mr-4 btn btn-outline-primary" aria-hidden="true"></i>
+                <i class="" aria-hidden="true">รายละเอียด</i>
               </a>
             </form>
 

@@ -7,7 +7,12 @@
   <div class="col-md-2">
     @include('leftmenu')
   </div>
-
+{{-- 
+@php
+    dd($vehicles_detail);
+    die;
+@endphp --}}
+  
   <div class="col-md-10 shadow p-3  rounded">
 
     <nav class="navbar navbar-light shadow " style="background-color: #b8e8ee;margin-bottom: 1em;">
@@ -19,9 +24,16 @@
         <div class="col-3">
 
           
-          <div class="card " style="width: 12rem;">
-            <a class="card-img-top" data-fancybox="gallery" href="{{$user_detail['userPicture']}}"><img
-                src="{{$user_detail['userPicture']}}" width="-15px" height="300px"></a>
+          <div class="card" style="width: 100%; height: 100%;">
+                @if (!empty($user_detail['userPicture']))
+                  <a class="card-img-top" data-fancybox="gallery" href="{{$user_detail['userPicture']}}" style="height: 250px;"><img
+                    src="{{$user_detail['userPicture']}}" style="width: 100%; max-width: 100%; max-height: 100%; object-fit: contain;"></a>
+                @else
+                  <a class="card-img-top" data-fancybox="gallery" href="{{asset('images/system/nophoto.png')}}"><img
+                  src="{{asset('images/system/nophoto.png')}}" style="width: 100%; max-width: 100%; max-height: 100%; object-fit: contain;"></a>
+                @endif
+
+                {{-- {{$user_detail->userPicture == null ? asset('images/system/nophoto.png'): $user_detail->userPicture}} --}}
           </div>
 
         </div>
@@ -34,11 +46,40 @@
         </div>
 
         <div class="col-sm">
+          
 
-          {{-- <a data-fancybox="gallery" href="{{$data['vehiclePicture']}}"><img src="{{$data['vehiclePicture']}}"
-            width="150px" height="100px"></a> --}}
-          {{-- <a data-fancybox="gallery" href="{{$data['vehiclePicture']}}"><img src="{{$data['vehiclePicture']}}"
-            width="150px" height="100px"></a> --}}
+          <div class="container">
+  <div class="row align-items-start">
+    <div class="col">
+      <div class="card" style="width: 80%; height: 50%;">
+               @if (!empty($vehicles_detail[0]['personalCardPicture']))
+                 <a class="card-img-top" data-fancybox="gallery" href="{{$vehicles_detail[0]['personalCardPicture']}}" style=""><img
+                   src="{{$vehicles_detail[0]['personalCardPicture']}}" style="width: 100%; max-width: 100%; max-height: 100%; object-fit: contain;"></a>
+                   <span>บัตรประชาชน</span>
+               @else
+                 <a class="card-img-top" data-fancybox="gallery" href="{{asset('images/system/nophoto.png')}}"><img
+                 src="{{asset('images/system/nophoto.png')}}" style="width: 100%; max-width: 100%; max-height: 100%; object-fit: contain;"></a>
+                 <span>บัตรประชาชน</span>
+               @endif
+   </div>
+ </div>
+    
+    <div class="col">
+       <div class="card" style="width: 80%; height: 50%;">
+                @if (!empty($vehicles_detail[0]['driverLicensePicture']))
+                  <a class="card-img-top" data-fancybox="gallery" href="{{$vehicles_detail[0]['driverLicensePicture']}}" style=""><img
+                    src="{{$vehicles_detail[0]['driverLicensePicture']}}" style="width: 100%; max-width: 100%; max-height: 100%; object-fit: contain;"></a>
+                    <span>ใบขับขี่</span>
+                @else
+                  <a class="card-img-top" data-fancybox="gallery" href="{{asset('images/system/nophoto.png')}}"><img
+                  src="{{asset('images/system/nophoto.png')}}" style="width: 100%; max-width: 100%; max-height: 100%; object-fit: contain;"></a>
+                  <span>ใบขับขี่</span>
+                @endif
+    </div>
+  </div>
+  
+ 
+</div>
         </div>
       </div>
     </div>
@@ -50,7 +91,7 @@
     <table class="table shadow" id="myTable">
       <thead>
         <tr>
-          <th scope="col" class="text-left">รถคันที่</th>
+          {{-- <th scope="col" class="text-left">รถคันที่</th> --}}
           <th scope="col" class="text-left">รูปโปรไฟล์รถ</th>
           <th scope="col" class="text-left">ทะเบียนรถ</th>
           <th scope="col" class="text-left">ประกันรถ</th>
@@ -68,7 +109,7 @@
         $status = $data['status'];
         @endphp
         <tr>
-          <td>1</td>
+          {{-- <td>1</td> --}}
           <td><a  data-fancybox="gallery" href="{{$data['vehiclePicture']}}"><img src="{{$data['vehiclePicture']}}"
                 width="150px" height="100px"></a></td>
           <td><a data-fancybox="gallery" href="{{$data['registrationPicture']}}"><img

@@ -39,7 +39,10 @@
         @foreach($allusers as $data)
         <tr>
 
-          <td><img src="{{$data->userPicture}}" width="80px" height="80"></td>
+          <td><a data-fancybox="gallery" href="{{$data->userPicture == null ? asset('images/system/nophoto.png'): $data->userPicture}}"><img
+            src="{{$data->userPicture == null ? asset('images/system/nophoto.png'): $data->userPicture}}" width="150px" height="100px"></a></td>
+
+          
           <td>{{$data->userName}}</td>
           <td>{{$data->phoneNumber}}</td>
           <td>{{$data->role}}</td>

@@ -28,6 +28,7 @@ Route::POST('login', 'api\LoginController@login');
 Route::POST('uploaduserImage', 'api\PersonalpictureController@uploaduserImage');
  Route::GET('checkStatus', 'api\PersonalpictureController@checkStatus');
 Route::POST('checkupload', 'api\PersonalpictureController@checkupload');
+Route::POST('uploadprofile', 'api\ProfilepictureController@uploadprofile');
 
 Route::POST('checkvehicleupload', 'api\VehicleconfirmController@checkvehicleupload');
 Route::POST('uploadvehicleImage', 'api\VehicleconfirmController@uploadvehicleImage');

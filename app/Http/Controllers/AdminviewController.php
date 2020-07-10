@@ -28,6 +28,7 @@ class AdminviewController extends Controller
    {
     $allusers = Users::where([
         ['role','Normal User'],
+        // ['userPicture','']
     ])->get();
 
     // $user_detail = DB::table('users')
