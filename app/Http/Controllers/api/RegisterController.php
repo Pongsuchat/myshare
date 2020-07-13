@@ -73,7 +73,7 @@ class RegisterController extends Controller
         $userName = $json['userName'];
         $phoneNumber = $json['phoneNumber'];
         $password = $json['password'];
-        // $deviceToken = $json['deviceToken'];
+        $deviceToken = $json['deviceToken'];
         $token = $this->token_jwt();
         
 
@@ -82,7 +82,7 @@ class RegisterController extends Controller
             'userName' => $json['userName'],
             'phoneNumber' => $json['phoneNumber'],
             'password' => Hash::make($password),
-            // 'deviceToken' => $deviceToken,
+            'deviceToken' => $deviceToken,
             'userToken' => $token,
             'role' => "Normal User",
             'status' => "New user",

@@ -28,12 +28,14 @@ Route::POST('login', 'api\LoginController@login');
 Route::POST('uploaduserImage', 'api\PersonalpictureController@uploaduserImage');
  Route::GET('checkStatus', 'api\PersonalpictureController@checkStatus');
 Route::POST('checkupload', 'api\PersonalpictureController@checkupload');
+
 Route::POST('uploadprofile', 'api\ProfilepictureController@uploadprofile');
 
 Route::POST('checkvehicleupload', 'api\VehicleconfirmController@checkvehicleupload');
 Route::POST('uploadvehicleImage', 'api\VehicleconfirmController@uploadvehicleImage');
 Route::POST('multiuploadvehicleImage', 'api\VehicleconfirmController@multiuploadvehicleImage');
-// Route::GET('checkvehicleNumeber', 'api\VehicleconfirmController@checkvehicleNumeber');
+
+Route::POST('uploadvehicleprofile', 'api\VehiclepictureController@uploadvehicleprofile');
 
 Route::POST('createtrip', 'api\CreatetripController@createtrip');
 

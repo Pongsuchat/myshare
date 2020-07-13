@@ -214,16 +214,16 @@ class PersonalpictureController extends Controller
 
         return response()->json([
             'status' => 200,
-            'msg' => 'true',
+            // 'msg' => 'true',
             'vehicleNumber' =>$vehicles->count(),
             'vehicledata' => $vehicles,
         ]);
 
-       }else{
+       }elseif($usert_status['images_status']=='success'){
 
         return response()->json([
             'status' => 500,
-            'msg' => 'failed',
+            'msg' => 'failed',              
             'vehicleNumber' =>$vehicles->count(),
             'vehicledata' => $vehicles,
         ]);
@@ -232,9 +232,5 @@ class PersonalpictureController extends Controller
 
     }
 
-
-    public function base64(Request $request)
-    {
-        
-    }
+ 
 }
