@@ -37,6 +37,10 @@ Route::POST('multiuploadvehicleImage', 'api\VehicleconfirmController@multiupload
 
 Route::POST('uploadvehicleprofile', 'api\VehiclepictureController@uploadvehicleprofile');
 
+Route::POST('createTrip', 'api\Createtrip\CreatetripController@createTrip');
+
+Route::GET('myNotificationList', 'api\notification\NotificationController@myNotificationList');
+
 Route::POST('createtrip', 'api\CreatetripController@createtrip');
 
 

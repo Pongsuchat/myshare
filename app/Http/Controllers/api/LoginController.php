@@ -30,7 +30,7 @@ class LoginController extends Controller
     {
 
 
-        // $json = $request->json()->all();
+        $json = $request->json()->all();
         $phoneNumber = $json['phoneNumber'];
         $password = $json['password'];
         $deviceToken = $json['deviceToken'];
