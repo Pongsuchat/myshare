@@ -59,7 +59,7 @@ class NotificationController extends Controller
         return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
             'status' => 204,
             'msg' => 'ยังไม่มีการแจ้งเตือน',
-            'data' => $data
+            
         ]);
        }
     }
