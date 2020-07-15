@@ -26,6 +26,7 @@ class CreatetripController extends Controller
                 'msg' => 'token is not found',
             ]);
             exit;
+             
         }
         $json = $request->json()->all();
         $tripFrom = $json['tripFrom'];
@@ -36,32 +37,42 @@ class CreatetripController extends Controller
         $supplieSize = $json['supplieSize'];
         $supplieQuantity = $json['supplieQuantity'];
         $supplieWeight = $json['supplieWeight'];
-        $remark = $json['remark'];
-        // $tripId =  rand(). '.' . $request->picture->extension(); 
+        $remark = $json['remark']; 
 
         $user = DB::table('users')->where('userToken',$userToken)->first();
         $driverId = $user['_id'];
-        $tripId =  rand(). '.' . $request->picture->extension(); 
+        $tripId =   $user['userName'].rand(); 
 
-
-        $data = [
+        $trip_data = [
         
-            'userName' => $json['userName'],
-            'phoneNumber' => $json['phoneNumber'],
-            'password' => Hash::make($password),
-            'deviceToken' => $deviceToken,
-            'userToken' => $token,
-            'role' => "Normal User",
-            'status' => "New user",
-            'images_status'=> "waiting",
-            'created' => date("Y-m-dTH:i:s\Z"),
-        
+            'tripId' =>$tripId,
+            'tripFrom' => $json['tripFrom'],
+            'tripTo' => $json['tripTo'],
+            'stopPoint' => $json['stopPoint'],
+            'distance' => $json['distance'],
+            'tripType' => $json['tripType'],
+            'supplieSize' => $json['supplieSize'],
+            'supplieQuantity' => $json['supplieQuantity'],
+            'supplieWeight' => $json['supplieWeight'],
+            'remark' => $json['remark'],
+            'tripId' =>$tripId,
+            'timestamp' => date("Y-m-dTH:i:s\Z"),
         ];
 
 
-        return response()->json([
-                    'status'=>200,
-                    'msg'=>$supplieWeight
-                ]); die;
+       $trip_insert = DB::table('trip')->insert($trip_data);
+        if ($trip_insert) {
+            return response()->json([
+                'status' => 200,
+                'msg' => 'OK',
+                
+            ]);
+        } else {
+            return response()->json([
+                'status' => 400,
+                'msg' => 'ข้อมูลการสร้าง trip ไม่ถูกต้อง ทำให้ไม่สามารถอนุมัติสร้างได้',
+
+            ]);
+        }
     }
 }
