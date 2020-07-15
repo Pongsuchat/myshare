@@ -56,6 +56,7 @@ class CreatetripController extends Controller
             'supplieWeight' => $json['supplieWeight'],
             'remark' => $json['remark'],
             'tripId' =>$tripId,
+            'tripStatus' => 'pending',
             'timestamp' => date("Y-m-dTH:i:s\Z"),
         ];
 
