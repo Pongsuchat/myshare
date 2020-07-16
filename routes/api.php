@@ -41,7 +41,11 @@ Route::POST('createTrip', 'api\Createtrip\CreatetripController@createTrip');
 
 Route::GET('myNotificationList', 'api\notification\NotificationController@myNotificationList');
 
-Route::POST('createtrip', 'api\CreatetripController@createtrip');
+Route::POST('createtrip', 'api\Createtrip\CreatetripController@createtrip');
+Route::GET('myTripsAll', 'api\Createtrip\CreatetripController@myTripsAll');
+Route::GET('myVehicle', 'api\Createtrip\VehicledetailController@myVehicle');
+Route::GET('myDetailVehicle', 'api\Createtrip\VehicledetailController@myDetailVehicle');
+Route::POST('editMyDetailVehicle', 'api\Createtrip\VehicledetailController@editMyDetailVehicle');
 
 
 

@@ -31,36 +31,37 @@ class NotificationController extends Controller
         $recipientId = $user['_id'];
 
         $notification_all = DB::table('notification')->where('recipientId',$recipientId)->get();
+       
+        if ($notification_all->count()>0) {
+            $notification_data ='';//ประกาศเป็น gobal
+                foreach ($notification_all as $key => $value) {
+                    
+                        $notification_data = $value;
+                    
+                }
         
-
-        $notification_data ='';//ประกาศเป็น gobal
-        foreach ($notification_all as $key => $value) {
-            
-                $notification_data = $value;
-            
-        }
-
-        $data = [
-                'header' => $notification_data['header'],
-                'message' => $notification_data['message'],
-                'data' => $notification_data['data'],
-                'timestamp' => $notification_data['timestamp'],
-            ];
+                $data = [
+                        'header' => $notification_data['header'],
+                        'message' => $notification_data['message'],
+                        'data' => $notification_data['data'],
+                        'timestamp' => $notification_data['timestamp'],
+                    ];
+                
         
-
-       if ($notification_all) {
-        return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-            'status' => 200,
-            'msg' => 'OK',
-            'data' => $data
-        ]);
-        
-       }else {
-        return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-            'status' => 204,
-            'msg' => 'ยังไม่มีการแจ้งเตือน',
             
-        ]);
-       }
+                return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                    'status' => 200,
+                    'msg' => 'OK',
+                    'data' => $data
+                ]);
+        } else {
+            return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                'status' => 204,
+                'msg' => 'ยังไม่มีการแจ้งเตือน',
+                
+            ]);
+           
+        
     }
+}
 }

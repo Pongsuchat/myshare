@@ -46,6 +46,7 @@ class CreatetripController extends Controller
         $trip_data = [
         
             'tripId' =>$tripId,
+            'driverId' =>$driverId,
             'tripFrom' => $json['tripFrom'],
             'tripTo' => $json['tripTo'],
             'stopPoint' => $json['stopPoint'],
@@ -75,5 +76,47 @@ class CreatetripController extends Controller
 
             ]);
         }
+    }
+
+    public function myTripsAll(Request $request)
+    {
+                  
+        $userToken = $request->header('userToken');
+        if ($this->comparetoken($userToken) === false) {
+            return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                'status' => 403,
+                'msg' => 'token is not found',
+            ]);
+            exit;
+             
+        }
+
+        $user = DB::table('users')->where('userToken',$userToken)->first();
+        $driverId = $user['_id'];
+
+        $mytrip_all = DB::table('trip')->where([
+            ['driverId', '=', $driverId],
+            
+        ])
+        ->whereIn('tripStatus', ['pending','traveling'],)->get();
+
+
+        if ($mytrip_all->count()>0) {
+           
+            return response()->json([
+                'status' => 200,
+                'msg' => 'OK',
+                'data' => $mytrip_all,
+                
+            ]);
+        }else {
+            return response()->json([
+                'status' => 204,
+                'msg' => 'ผู้ให้บริการยังไม่เคยสร้าง',
+                
+            ]);
+        }
+
+        
     }
 }
