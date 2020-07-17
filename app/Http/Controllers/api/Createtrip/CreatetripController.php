@@ -33,6 +33,7 @@ class CreatetripController extends Controller
         $tripTo = $json['tripTo'];
         $stopPoint = $json['stopPoint'];
         $distance = $json['distance'];
+        $departureDate = $json['departureDate'];
         $tripType = $json['tripType'];
         $supplieSize = $json['supplieSize'];
         $supplieQuantity = $json['supplieQuantity'];
@@ -51,6 +52,7 @@ class CreatetripController extends Controller
             'tripTo' => $json['tripTo'],
             'stopPoint' => $json['stopPoint'],
             'distance' => $json['distance'],
+            'departureDate' => $json['departureDate'],
             'tripType' => $json['tripType'],
             'supplieSize' => $json['supplieSize'],
             'supplieQuantity' => $json['supplieQuantity'],
@@ -60,6 +62,8 @@ class CreatetripController extends Controller
             'tripStatus' => 'pending',
             'timestamp' => date("Y-m-dTH:i:s\Z"),
         ];
+
+      
 
 
        $trip_insert = DB::table('trip')->insert($trip_data);
@@ -118,5 +122,100 @@ class CreatetripController extends Controller
         }
 
         
+    }
+
+
+    public function myTripswithBooked(Request $request)
+    {
+                  
+        $userToken = $request->header('userToken');
+        if ($this->comparetoken($userToken) === false) {
+            return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                'status' => 403,
+                'msg' => 'token is not found',
+            ]);
+            exit;
+             
+        }
+
+                   
+        $userToken = $request->header('userToken');
+        if ($this->comparetoken($userToken) === false) {
+            return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                'status' => 403,
+                'msg' => 'token is not found',
+            ]);
+            exit;
+             
+        }
+
+        $user = DB::table('users')->where('userToken',$userToken)->first();
+        $driverId = $user['_id'];
+
+        $myTripswithBooked = DB::table('trip')->where([
+            ['driverId', '=', $driverId],
+           
+            
+        ])->whereNotNull('tripMember')
+        ->whereIn('tripStatus', ['pending','traveling'],)->get();
+
+
+        if ($myTripswithBooked->count()>0) {
+
+            return response()->json([
+                'status' => 200,
+                'msg' => 'OK',
+                'data' => $myTripswithBooked,
+                
+            ]);
+        }else {
+            return response()->json([
+                'status' => 204,
+                'msg' => 'ยังไม่มี Trips ที่ผู้ให้บริการสร้างถูกจอง',
+                
+            ]);
+        }
+    }
+
+    public function myTripsNext3Days(Request $request)
+    {
+        $userToken = $request->header('userToken');
+        if ($this->comparetoken($userToken) === false) {
+            return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                'status' => 403,
+                'msg' => 'token is not found',
+            ]);
+            exit;
+             
+        }
+
+        $user = DB::table('users')->where('userToken',$userToken)->first();
+        $driverId = $user['_id'];
+
+        $next3day = date("Y-m-dTH:i:s\Z",strtotime("+2 days"));
+        $timenow = date("Y-m-dTH:i:s\Z");
+    
+        
+        $myTripsNext3Days = DB::table('trip')->where([
+            ['driverId', '=', $driverId],
+            ['departureDate', '>=', $timenow],
+            ['departureDate', '<=', $next3day]
+          
+        ])->get();
+        
+        if ($myTripsNext3Days->count()>0) {
+            return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                'status' => 200,
+                'msg' => 'OK',
+                'data' => $myTripsNext3Days,
+                
+            ]);
+        }else {
+            return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+
+                'status' => '204',
+                'msg' => 'ผู้ให้บริการ ไม่มี Trips ที่ใกล้จะถึงภายใน 3 วัน',
+            ]);
+        }
     }
 }

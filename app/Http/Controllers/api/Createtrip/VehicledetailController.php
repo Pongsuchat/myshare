@@ -177,3 +177,4 @@ class VehicledetailController extends Controller
         }
     }
 }
+

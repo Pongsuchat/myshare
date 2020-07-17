@@ -43,6 +43,9 @@ Route::GET('myNotificationList', 'api\notification\NotificationController@myNoti
 
 Route::POST('createtrip', 'api\Createtrip\CreatetripController@createtrip');
 Route::GET('myTripsAll', 'api\Createtrip\CreatetripController@myTripsAll');
+Route::GET('myTripswithBooked', 'api\Createtrip\CreatetripController@myTripswithBooked');
+Route::GET('myTripsNext3Days', 'api\Createtrip\CreatetripController@myTripsNext3Days');
+
 Route::GET('myVehicle', 'api\Createtrip\VehicledetailController@myVehicle');
 Route::GET('myDetailVehicle', 'api\Createtrip\VehicledetailController@myDetailVehicle');
 Route::POST('editMyDetailVehicle', 'api\Createtrip\VehicledetailController@editMyDetailVehicle');
