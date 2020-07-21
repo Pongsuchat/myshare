@@ -62,13 +62,16 @@ class VehiclesController extends Controller
 
         $vehicles_detail = DB::table('vehicles')->where('user_id',$user_detail['_id'])->get();
 
-        return view('adminusers.detailuser',[
+        // return view('adminusers.detailuser',[
         
-            'user_detail' => $user_detail,
-            'vehicles_detail' => $vehicles_detail,
-            'vehicles_num' => $vehicles_detail->count()
-            ]);    
+        //     'user_detail' => $user_detail,
+        //     'vehicles_detail' => $vehicles_detail,
+        //     'vehicles_num' => $vehicles_detail->count()
+        //     ]);    
         
-        
+        return redirect("usersdetail?id=$user_id");
+        // return redirect("usersdetail?id=$user_id&id=vehicle");ส่ง id ไปฟังก์ชั่นอื่น
     }
+
+    
 }

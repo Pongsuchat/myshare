@@ -101,7 +101,8 @@ class VehicledetailController extends Controller
         $image_64 = $request->input('picture');
         $vehicleRegistration = $json['vehicleRegistration'];
         $vehicleBrand = $json['vehicleBrand'];
-        $vehicleGeneration = $json['vehicleGeneration'];
+        $vehicleModel = $json['vehicleModel'];
+        $vehicleColor = $json['vehicleColor'];
         $seat = $json['seat'];
         $actNo = $json['actNo'];
         $personalNumber = $json['personalNumber'];
@@ -140,7 +141,8 @@ class VehicledetailController extends Controller
                 'vehiclePicture'=>$path_image,
                 'vehicleBrand'=>$vehicleBrand,
                 'vehicleRegistration'=>$vehicleRegistration,
-                'vehicleGeneration'=>$vehicleGeneration,
+                'vehicleModel'=>$vehicleModel,
+                'vehicleColor'=>$vehicleColor,
                 'seat'=>$seat,
                 'actNo'=>$actNo,
                 'personalNumber'=>$personalNumber,

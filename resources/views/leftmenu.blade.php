@@ -38,6 +38,10 @@
         <div class="">
           <a class="dropdown-item-left" href="{{url('dashboard')}}" >dashboard</a>
                 </div>
+                <div class="ml-4" style="display: flex; flex-direction: row;align-items: center;">
+                  <i class="fa fa-map-marker" aria-hidden="true" style="color: #fff;"></i>
+                  <a class="dropdown-item-left" href="{{url('travelprice')}}" >แก้ไขราคา Trip</a>
+                </div>
       </div>
     </div>
 

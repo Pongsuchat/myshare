@@ -28,6 +28,9 @@ class CreatetripController extends Controller
             exit;
              
         }
+        $pricerate_travel = DB::table('tripprice')->where('data','myshare')->first();
+        $pricerate = $pricerate_travel['priceRate'];
+
         $json = $request->json()->all();
         $tripFrom = $json['tripFrom'];
         $tripTo = $json['tripTo'];
@@ -38,12 +41,19 @@ class CreatetripController extends Controller
         $supplieSize = $json['supplieSize'];
         $supplieQuantity = $json['supplieQuantity'];
         $supplieWeight = $json['supplieWeight'];
-        $remark = $json['remark']; 
+        $carId = $json['carId']; 
+        $remark = $json['remark'];
 
         $user = DB::table('users')->where('userToken',$userToken)->first();
         $driverId = $user['_id'];
         $tripId =   $user['userName'].rand(); 
 
+        
+        
+        $netPrice = $pricerate*$distance;
+       
+       
+        
         $trip_data = [
         
             'tripId' =>$tripId,
@@ -58,16 +68,21 @@ class CreatetripController extends Controller
             'supplieQuantity' => $json['supplieQuantity'],
             'supplieWeight' => $json['supplieWeight'],
             'remark' => $json['remark'],
-            'tripId' =>$tripId,
+            'carId' =>$carId,
             'tripStatus' => 'pending',
             'timestamp' => date("Y-m-dTH:i:s\Z"),
+            'netPrice' =>$netPrice,
+            
         ];
 
       
 
 
-       $trip_insert = DB::table('trip')->insert($trip_data);
+       $trip_insert = DB::table('tripprice_travel')->insert($trip_data);
         if ($trip_insert) {
+
+            $trip_insert = DB::table('trip')->insert($trip_data);
+
             return response()->json([
                 'status' => 200,
                 'msg' => 'OK',

@@ -28,10 +28,15 @@ Route::group(['middleware' => ['CheckAuth']], function () {
     Route::GET('usersdetail','AdminviewController@usersdetail');
     Route::GET('waitingforapprove','AdminviewController@waitingforapprove');
 
-    Route::post('/updatestatus', 'VehiclesController@updatestatus');
+    Route::match(['post','get'],'/updatestatus', 'VehiclesController@updatestatus');
+    Route::match(['post','get'],'/getdetailuser', 'VehiclesController@getdetailuser');
 
     Route::get('/adminuser','AdminviewController@adminuser');
     Route::get('/narmoluser','AdminviewController@narmoluser');
+
+    Route::get('/travelprice','Price\TravelpriceController@travelprice');
+    Route::match(['post','get'],'/tripprice','Price\TravelpriceController@tripprice');
+
 
     Route::get('/loginblackoffice/successlogin', 'LoginController@successlogin');
     Route::match(['post','get'],'/logout', 'LoginController@logout');

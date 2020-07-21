@@ -31,17 +31,6 @@ class AdminviewController extends Controller
         // ['userPicture','']
     ])->get();
 
-    // $user_detail = DB::table('users')
-    //         ->join('vehicles', 'users.id', '=', 'vehicles.user_id')
-    //         // ->join('orders', 'users.id', '=', 'orders.user_id')
-    //         ->select('users.*', 'vehicles.*', 'orders.price')
-    //         ->get();
-    // foreach ($allusers as $key => $value) {
-    //     echo $value['_id'],'<br>';
-    // }
-    // dd($allusers);
-    // die;
-
     return view('view_menu.usersview',[
         
         'allusers' => $allusers

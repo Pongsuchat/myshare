@@ -60,21 +60,4 @@ class RegisterController extends Controller
 
 
 
-        //$personalPicture = $jon['file('personalPicture')'];
-        // $personalPicture = $json['personalPicture'];
-        // $userToken = $json['userToken'];
-        //$role = $json['role'];
-        // $personalPicture = $json['personalPicture'];
-        // $file = $_FILES[$personalPicture]['name'];
-        // return response()->json($file);
-        // $this->validate($request,
-        // ['personalPicture' => 'required|image'],
-        // ['personalPicture' => 'mimes:jpg,png,gif|max:2048']);
-        // $personalPicture = $request->file('personalPicture');
-        // $new_name = rand() . '.' . $personalPicture->getClientOriginalExtension();
-        //  $personalPicture->move(public_path("images/$phoneNumber"), $new_name);
-        //  $path_image=public_path("images/$phoneNumber").$new_name;
-        //  return response()->json([
-        //      'path'=>$path_image
-        //  ]);
-        //return back()->with('success', 'อัพโหลดไฟล์เรียบร้อยแล้ว')->with('path', $new_name);
+        
