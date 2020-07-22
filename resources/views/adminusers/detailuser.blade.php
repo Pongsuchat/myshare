@@ -112,6 +112,10 @@
           {{-- <td>1</td> --}}
           <td><a  data-fancybox="gallery" href="{{$data['vehiclePicture']}}"><img src="{{$data['vehiclePicture']}}"
                 width="150px" height="100px"></a></td>
+
+            
+
+
           <td><a data-fancybox="gallery" href="{{$data['registrationPicture']}}"><img
                 src="{{$data['registrationPicture']}}" width="150px" height="100px"></a></td>
           <td><a data-fancybox="gallery" href="{{$data['insurancePicture']}}"><img src="{{$data['insurancePicture']}}"

@@ -162,7 +162,7 @@ class VehicledetailController extends Controller
 
 
             if ($vehicles_edit) {
-                $myvehicle_update = DB::table('vehicles')->where('_id',$vehicle_id)->first();
+                // $myvehicle_update = DB::table('vehicles')->where('_id',$vehicle_id)->first();
 
                 return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
                     'status' => 200,
@@ -177,6 +177,123 @@ class VehicledetailController extends Controller
                 ]);
             }
         }
+    }
+
+    public function createVehicle(Request $request)
+    {
+        $userToken = $request->header('userToken');
+
+        if ($this->comparetoken($userToken) === false) {
+            return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                'status' => 403,
+                'msg' => 'token is not found',
+            ]);
+            exit;
+        }
+
+        $user = DB::table('users')->where('userToken',$userToken)->first(); 
+        $user_id = $user['_id'];
+
+        $json = $request->json()->all();
+        $image_64 = $request->input('picture');
+        $vehicleRegistration = $json['vehicleRegistration'];
+        $vehicleBrand = $json['vehicleBrand'];
+        $vehicleModel = $json['vehicleModel'];
+        $vehicleColor = $json['vehicleColor'];
+        $seat = $json['seat'];
+        $actNo = $json['actNo'];
+        $personalNumber = $json['personalNumber'];
+        $insurance = $json['insurance'];
+        $vehicleType = $json['vehicleType'];
+        $weight = $json['weight']; 
+
+        $user = DB::table('users')->where('userToken',$userToken)->first(); 
+        $user_name = $user['userName'];
+        $user_id = $user['_id'];
+        
+        $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];
+        $replace = substr($image_64, 0, strpos($image_64, ',')+1); 
+        $image = str_replace($replace, '', $image_64); 
+        $image = str_replace(' ', '+', $image); 
+        $imageName = Str::random(10).'.'.$extension;
+
+        $path_folder = public_path("images/vehicleprofile/").$user_name."/";
+
+       
+        if (!file_exists( $path_folder))  
+        { 
+            mkdir($path_folder, 0777, true);
+        } 
+        
+        $path = $path_folder.$imageName;
+        $path_image = "/images/vehicleprofile/$user_name/$imageName";// แพทที่เก็บรูป
+
+      
+        if(file_put_contents($path ,base64_decode($image))){
+            $img = Image::make(public_path($path_image));
+            $img->insert(public_path('images/watermark/watermark.png'), 'center');
+            $img->save(public_path($path_image));
+
+            $data = [
+                'vehiclePicture'=>$path_image,
+                'vehicleBrand'=>$vehicleBrand,
+                'vehicleRegistration'=>$vehicleRegistration,
+                'vehicleModel'=>$vehicleModel,
+                'vehicleColor'=>$vehicleColor,
+                'seat'=>$seat,
+                'actNo'=>$actNo,
+                'personalNumber'=>$personalNumber,
+                'insurance'=>$insurance,
+                'vehicleType'=>$vehicleType,
+                'weight'=>$weight,
+                'image_status'=>'waiting',
+                'user_id'=>$user_id,
+                'user_id'=>$user_id,
+                 'status'=> 'waiting',
+                // 'registrationPicture '=> 'null' ,
+                'status'=> 'waiting',
+                // 'registrationPicture '=> '',
+                // 'personalCardPicture '=> '',
+                // 'registrationPicture '=> '',
+                // 'registrationPicture '=> '',
+                // 'registrationPicture '=> '',
+                // 'registrationPicture '=> '',
+                // 'registrationPicture '=> '',
+                // 'registrationPicture '=> '',
+                // 'registrationPicture '=> '',
+
+
+
+                'createAt'=>date("Y-m-dTH:i:s\Z"),
+               
+            ];
+          
+            // $vehicles_fineuser = DB::table('vehicles')->where([['_id',$vehicle_id],])->first();
+        
+            // @unlink(public_path($vehicles_fineuser['vehiclePicture']));
+            
+        
+            $vehicles_create = DB::table('vehicles')->insert($data);
+
+
+            if ($vehicles_create) {
+                
+
+                return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                    'status' => 200,
+                    'msg' => 'OK',
+                    
+                ]);
+            }else {
+                return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                    'status' => 400,
+                    'msg' => 'เพิ่มรถไม่สำเร็จกรุณาลองใหม่',
+                    
+                ]);
+            }
+
+        }
+
     }
 }
 

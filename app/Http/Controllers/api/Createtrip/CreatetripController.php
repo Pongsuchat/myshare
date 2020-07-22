@@ -6,6 +6,7 @@ use App\Http\Controllers\api\RegisterController;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Request;
+ use App\Time;
 
 
 class CreatetripController extends Controller
@@ -18,7 +19,19 @@ class CreatetripController extends Controller
 
     public function createTrip(Request $request)
     {
-                 
+
+        $mytime = now();
+ 
+        $pricerate_travel = DB::table('tripprice')->first();
+        // return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+        //     // 'status' => 403,
+        //     'status' => date('Y-m-dTH:i:s\Z'),
+        //     'msg' => now(),
+        // ]);
+        
+        
+        // die;     
+        
         $userToken = $request->header('userToken');
         if ($this->comparetoken($userToken) === false) {
             return response()->json([                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
@@ -28,8 +41,10 @@ class CreatetripController extends Controller
             exit;
              
         }
-        $pricerate_travel = DB::table('tripprice')->where('data','myshare')->first();
-        $pricerate = $pricerate_travel['priceRate'];
+       
+
+        // $pricerate_travel = DB::table('tripprice')->where('data','myshare')->first();
+        // $pricerate = $pricerate_travel['priceRate'];
 
         $json = $request->json()->all();
         $tripFrom = $json['tripFrom'];
@@ -50,32 +65,39 @@ class CreatetripController extends Controller
 
         
         
-        $netPrice = $pricerate*$distance;
-       
+        // $netPrice = $pricerate*$distance;
+       $date = (string) now();
        
         
         $trip_data = [
         
-            'tripId' =>$tripId,
-            'driverId' =>$driverId,
-            'tripFrom' => $json['tripFrom'],
-            'tripTo' => $json['tripTo'],
-            'stopPoint' => $json['stopPoint'],
-            'distance' => $json['distance'],
-            'departureDate' => $json['departureDate'],
-            'tripType' => $json['tripType'],
-            'supplieSize' => $json['supplieSize'],
-            'supplieQuantity' => $json['supplieQuantity'],
-            'supplieWeight' => $json['supplieWeight'],
-            'remark' => $json['remark'],
-            'carId' =>$carId,
-            'tripStatus' => 'pending',
-            'timestamp' => date("Y-m-dTH:i:s\Z"),
-            'netPrice' =>$netPrice,
+            // 'tripId' =>$tripId,
+            // 'driverId' =>$driverId,
+            // 'tripFrom' => $json['tripFrom'],
+            // 'tripTo' => $json['tripTo'],
+            // 'stopPoint' => $json['stopPoint'],
+            // 'distance' => $json['distance'],
+            // 'departureDate' => $json['departureDate'],
+            // 'tripType' => $json['tripType'],
+            // 'supplieSize' => $json['supplieSize'],
+            // 'supplieQuantity' => $json['supplieQuantity'],
+            // 'supplieWeight' => $json['supplieWeight'],
+            // 'remark' => $json['remark'],
+            // 'carId' =>$carId,
+            // 'tripStatus' => 'pending',
+            'timestamp' => ISODate(now()),//date('Y-m-dTH:i:s\Z'),
+            // 'netPrice' =>$netPrice,
             
         ];
-
-      
+        $time  = new Time($trip_data);
+        
+        $time->save();
+        die;
+        // return response()->json([
+        //     'status' => 200,
+        //     'msg' => $date,
+            
+        // ]);die;
 
 
        $trip_insert = DB::table('tripprice_travel')->insert($trip_data);

@@ -26,16 +26,31 @@ class TravelpriceController extends Controller
         $request->validate([
             'priceRate' => 'required|numeric',
             
-        ]);
-        $data = [
-            'priceRate' => $request->post('priceRate'),
-            'data' => 'myshare' //สร้างสำหรับ update DB และ Get data
             
+        ]);
+
+        $data = array();
+        $data_rate = [
+            'priceRate' => $request->post('priceRate'),
+            'deposit' => 'null',
+            'startedPrice' => 'null',
+            'priceByStartTime' => 'null',
         ];
        
-     
+        $data = [
+            'travel' => $data_rate,
+        ];
+       
+        // echo "<pre>";
+        // print_r(json_encode( $data));
+        // echo "</pre>";
+        // die;
         //  $pricerate =  DB::table('tripprice_travel')->insert([ 'priceRate' => $request->post('priceRate')]);
-        $pricerate_update = DB::table('tripprice')->where('data','myshare')->update($data);
+        $pricerate_getid = DB::table('tripprice')->first();
+        dd($pricerate_getid['_id']);
+        die;
+
+        $pricerate_update = DB::table('tripprice')->where('_id',$pricerate_getid['_id'])->update(json_encode( $data));
         if ($pricerate_update) {
             
         }else {

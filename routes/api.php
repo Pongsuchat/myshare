@@ -49,6 +49,7 @@ Route::GET('myTripsNext3Days', 'api\Createtrip\CreatetripController@myTripsNext3
 Route::GET('myVehicle', 'api\Createtrip\VehicledetailController@myVehicle');
 Route::GET('myDetailVehicle', 'api\Createtrip\VehicledetailController@myDetailVehicle');
 Route::POST('editMyDetailVehicle', 'api\Createtrip\VehicledetailController@editMyDetailVehicle');
+Route::POST('createVehicle', 'api\Createtrip\VehicledetailController@createVehicle');
 
 
 
