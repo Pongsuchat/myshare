@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\api\Createtrip;
 
+use Carbon\Carbon;
 use App\Http\Controllers\api\RegisterController;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Request;
- use App\Time;
+use App\Tripprice;
+use DateTime;
+use DateInterval;
+// use MongoDB\BSON\UTCDateTime as MongoDate;
 
 
 class CreatetripController extends Controller
@@ -42,9 +46,10 @@ class CreatetripController extends Controller
              
         }
        
+        $tripprice = Tripprice::get();
+        $data = $tripprice->first();
+        $pricerate = $data['travel']['priceRate'];
 
-        // $pricerate_travel = DB::table('tripprice')->where('data','myshare')->first();
-        // $pricerate = $pricerate_travel['priceRate'];
 
         $json = $request->json()->all();
         $tripFrom = $json['tripFrom'];
@@ -64,41 +69,37 @@ class CreatetripController extends Controller
         $tripId =   $user['userName'].rand(); 
 
         
-        
-        // $netPrice = $pricerate*$distance;
-       $date = (string) now();
+        $netPrice = $pricerate*$distance;
+    //    $datetimestamp = (new DateTime())->add(new DateInterval('PT7H'));
+       $datetimestamp = new DateTime();
+       $datetime_insert = new \MongoDB\BSON\UTCDateTime($datetimestamp);
+
+       $departureDate_stamp = new Datetime($departureDate);
+       $departureDate_insert = new \MongoDB\BSON\UTCDateTime($departureDate_stamp);
        
-        
+   
         $trip_data = [
         
-            // 'tripId' =>$tripId,
-            // 'driverId' =>$driverId,
-            // 'tripFrom' => $json['tripFrom'],
-            // 'tripTo' => $json['tripTo'],
-            // 'stopPoint' => $json['stopPoint'],
-            // 'distance' => $json['distance'],
-            // 'departureDate' => $json['departureDate'],
-            // 'tripType' => $json['tripType'],
-            // 'supplieSize' => $json['supplieSize'],
-            // 'supplieQuantity' => $json['supplieQuantity'],
-            // 'supplieWeight' => $json['supplieWeight'],
-            // 'remark' => $json['remark'],
-            // 'carId' =>$carId,
-            // 'tripStatus' => 'pending',
-            'timestamp' => ISODate(now()),//date('Y-m-dTH:i:s\Z'),
-            // 'netPrice' =>$netPrice,
+            'tripId' =>$tripId,
+            'driverId' =>$driverId,
+            'tripFrom' => $json['tripFrom'],
+            'tripTo' => $json['tripTo'],
+            'stopPoint' => $json['stopPoint'],
+            'distance' => $json['distance'],
+            'departureDate' => $departureDate_insert,
+            'tripType' => $json['tripType'],
+            'supplieSize' => $json['supplieSize'],
+            'supplieQuantity' => $json['supplieQuantity'],
+            'supplieWeight' => $json['supplieWeight'],
+            'remark' => $json['remark'],
+            'carId' =>$carId,
+            'tripStatus' => 'pending',
+            'timestamps' => $datetime_insert,
+             'netPrice' =>$netPrice,
+           
             
         ];
-        $time  = new Time($trip_data);
-        
-        $time->save();
-        die;
-        // return response()->json([
-        //     'status' => 200,
-        //     'msg' => $date,
-            
-        // ]);die;
-
+       
 
        $trip_insert = DB::table('tripprice_travel')->insert($trip_data);
         if ($trip_insert) {

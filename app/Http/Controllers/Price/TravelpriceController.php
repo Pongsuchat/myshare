@@ -7,18 +7,31 @@ use Illuminate\Http\Request;
 use App\Users;
 use DB;
 use App\Tripprice_travel;
-
+use App\Tripprice;
 class TravelpriceController extends Controller
 {
     public function travelprice(Request $request)
     {
-        $pricerate = DB::table('tripprice_travel')->where('data','myshare')->first();
-        return view('menu.travel_price',[
-            
-            'pricerate' => $pricerate
-            
         
-        ]);
+        $tripprice = Tripprice::get();
+
+        if ($tripprice->first()) {
+
+            $data = $tripprice->first();
+        
+            return view('menu.travel_price',[
+                
+                'pricerate' =>$data['travel']['priceRate']
+                
+            ]);
+            
+        }else {
+            return view('menu.travel_price');
+        }
+        
+      
+        
+        
     }
 
     public function tripprice(Request $request)
@@ -29,36 +42,31 @@ class TravelpriceController extends Controller
             
         ]);
 
-        $data = array();
-        $data_rate = [
+        $data_rate = array(
             'priceRate' => $request->post('priceRate'),
             'deposit' => 'null',
             'startedPrice' => 'null',
             'priceByStartTime' => 'null',
-        ];
-       
-        $data = [
-            'travel' => $data_rate,
-        ];
-       
-        // echo "<pre>";
-        // print_r(json_encode( $data));
-        // echo "</pre>";
-        // die;
-        //  $pricerate =  DB::table('tripprice_travel')->insert([ 'priceRate' => $request->post('priceRate')]);
-        $pricerate_getid = DB::table('tripprice')->first();
-        dd($pricerate_getid['_id']);
-        die;
+        );
+        $travel=array('travel' =>  $data_rate ,);//'deliver'=>$data_rate);
 
-        $pricerate_update = DB::table('tripprice')->where('_id',$pricerate_getid['_id'])->update(json_encode( $data));
-        if ($pricerate_update) {
-            
+        $pricerate_getid = DB::table('tripprice')->first();
+        
+        if ($pricerate_getid) {
+
+            $tripprice_update = DB::table('tripprice')
+            ->where('_id',$pricerate_getid['_id'])
+            ->update($travel);
+
         }else {
-            $pricerate =  DB::table('tripprice')->insert($data);
+              
+            $tripprice = new  Tripprice($travel);//เชื่อมโมเดล
+            $tripprice->save();
+             
         }
-       
-        return redirect('tripprice');
+        return redirect('travelprice');
     }
+
 
     
 }

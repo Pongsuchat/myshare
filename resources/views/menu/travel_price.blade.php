@@ -7,11 +7,15 @@
   <div class="col-md-2">
     @include('leftmenu')
   </div>
-{{-- 
+
 @php
-    dd($vehicles_detail);
-    die;
-@endphp --}}
+    // dd($pricerate);
+    // die;
+    // foreach (  $pricerate as $key => $value) {
+    //     echo $key,"=",$value,"<br>";
+    // }
+    // die;
+@endphp
   
   <div class="col-md-10 shadow p-3  rounded">
 
@@ -26,6 +30,15 @@
           {{-- <label for="staticEmail2" class="sr-only">เรทราคาปัจจุบัน : 96</label>
           <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="เรทราคาปัจจุบัน : 96"> --}}
           {{-- <a>เรทราคาของ Trip ปัจจุบัน = {{$pricerate['priceRate']}} ต่อระยะทาง 1 กิโลเมตร</a> --}}
+
+          
+          @if (!empty($pricerate))
+          <a>เรทราคาของ Trip ปัจจุบัน = {{$pricerate}} ต่อระยะทาง 1 กิโลเมตร</a>
+            
+        @else
+        <a>เรทราคาของ Trip ปัจจุบัน = ยังไม่กำหนดเรทราคา ต่อระยะทาง 1 กิโลเมตร</a>
+        @endif
+        
         </div>
         <div class="form-group mx-sm-3 mb-2">
           {{-- <label for="inputPassword2" class="sr-only">เรทราคาของทริปที่ต้องการแก้ไข</label> --}}

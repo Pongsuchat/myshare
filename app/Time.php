@@ -7,7 +7,7 @@ use Jenssegers\Mongodb\Eloquent\Model;
 
 class Time extends Model
 {
-    protected $table ="trip";
+    protected $table ="time";
     protected $fillable =[
         'timestamp'
 
