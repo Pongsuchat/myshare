@@ -27,11 +27,6 @@
       <form class="form-inline" method="POST" action="{{url('/tripprice')}}">
         {{csrf_field()}}
         <div class="form-group mb-2">
-          {{-- <label for="staticEmail2" class="sr-only">เรทราคาปัจจุบัน : 96</label>
-          <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="เรทราคาปัจจุบัน : 96"> --}}
-          {{-- <a>เรทราคาของ Trip ปัจจุบัน = {{$pricerate['priceRate']}} ต่อระยะทาง 1 กิโลเมตร</a> --}}
-
-          
           @if (!empty($pricerate))
           <a>เรทราคาของ Trip ปัจจุบัน = {{$pricerate}} ต่อระยะทาง 1 กิโลเมตร</a>
             
@@ -41,7 +36,6 @@
         
         </div>
         <div class="form-group mx-sm-3 mb-2">
-          {{-- <label for="inputPassword2" class="sr-only">เรทราคาของทริปที่ต้องการแก้ไข</label> --}}
           <input type="number" class="form-control" id="priceRate" name="priceRate" placeholder="เรทราคาของทริปที่ต้องการแก้ไข">
         </div>
         <button type="submit" class="btn btn-primary mb-2">ยืนยันการแก้ไข</button>

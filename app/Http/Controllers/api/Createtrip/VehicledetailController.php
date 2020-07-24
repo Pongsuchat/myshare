@@ -8,6 +8,8 @@ use DB;
 use Image,Str,Storage;
 use App\Http\Controllers\api\RegisterController;
 use App\Http\Controllers\api\VehiclepictureController;
+use DateTime;
+use DateInterval;
 
 class VehicledetailController extends Controller
 {
@@ -137,6 +139,10 @@ class VehicledetailController extends Controller
             $img->insert(public_path('images/watermark/watermark.png'), 'center');
             $img->save(public_path($path_image));
 
+            $updateAt = new DateTime();
+            $updateAt_insert = new \MongoDB\BSON\UTCDateTime($updateAt);
+              
+
             $data = [
                 'vehiclePicture'=>$path_image,
                 'vehicleBrand'=>$vehicleBrand,
@@ -149,7 +155,7 @@ class VehicledetailController extends Controller
                 'insurance'=>$insurance,
                 'vehicleType'=>$vehicleType,
                 'weight'=>$weight,
-                'updateAt'=>date("Y-m-dTH:i:s\Z"),
+                'updateAt'=> $updateAt_insert,
                
             ];
           
@@ -234,6 +240,10 @@ class VehicledetailController extends Controller
             $img->insert(public_path('images/watermark/watermark.png'), 'center');
             $img->save(public_path($path_image));
 
+            $createAt = new DateTime();
+            $createAt_insert = new \MongoDB\BSON\UTCDateTime($createAt);
+
+
             $data = [
                 'vehiclePicture'=>$path_image,
                 'vehicleBrand'=>$vehicleBrand,
@@ -249,30 +259,11 @@ class VehicledetailController extends Controller
                 'image_status'=>'waiting',
                 'user_id'=>$user_id,
                 'user_id'=>$user_id,
-                 'status'=> 'waiting',
-                // 'registrationPicture '=> 'null' ,
-                'status'=> 'waiting',
-                // 'registrationPicture '=> '',
-                // 'personalCardPicture '=> '',
-                // 'registrationPicture '=> '',
-                // 'registrationPicture '=> '',
-                // 'registrationPicture '=> '',
-                // 'registrationPicture '=> '',
-                // 'registrationPicture '=> '',
-                // 'registrationPicture '=> '',
-                // 'registrationPicture '=> '',
-
-
-
-                'createAt'=>date("Y-m-dTH:i:s\Z"),
+                'status'=> 'new create',
+                'createAt'=> $createAt_insert,
                
             ];
-          
-            // $vehicles_fineuser = DB::table('vehicles')->where([['_id',$vehicle_id],])->first();
-        
-            // @unlink(public_path($vehicles_fineuser['vehiclePicture']));
-            
-        
+      
             $vehicles_create = DB::table('vehicles')->insert($data);
 
 

@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use DB;
 use Image,Str,Storage;
 use App\Http\Controllers\api\RegisterController;
+use DateTime;
+use DateInterval;
+
 
 class VehiclepictureController extends Controller
 {
@@ -82,9 +85,14 @@ class VehiclepictureController extends Controller
             $img->insert(public_path('images/watermark/watermark.png'), 'center');
             $img->save(public_path($path_image));
 
+            $updateAt = new DateTime();
+            $updateAt_insert = new \MongoDB\BSON\UTCDateTime($updateAt);
+            $createAt = new DateTime();
+            $createAt_insert = new \MongoDB\BSON\UTCDateTime($createAt);
+
             $data = [
                 $action=>$path_image,
-                'updateAt'=>date("Y-m-dTH:i:s\Z"),
+                'updateAt'=> $updateAt_insert,
             ];
           
             $vehicles_fineuser = DB::table('vehicles')->where([['user_id',$user_id],])->first();
@@ -108,7 +116,7 @@ class VehiclepictureController extends Controller
                 'user_id'=>$user_id,
                 'status'=> "waiting",
                 'image_status'=> "waiting",
-                'createAt'=>date("Y-m-dTH:i:s\Z"),
+                'createAt'=> $createAt_insert,
                 
             ];
            
@@ -137,6 +145,10 @@ class VehiclepictureController extends Controller
 
      private function multiupdateImage($multipicture)
     {
+        $updateAt = new DateTime();
+        $updateAt_insert = new \MongoDB\BSON\UTCDateTime($updateAt);
+        $createAt = new DateTime();
+        $createAt_insert = new \MongoDB\BSON\UTCDateTime($createAt);
       
         $user = DB::table('users')->where('userToken',$multipicture['userToken'])->first(); //ค้านหา username จากtoken
         $user_name =$user['userName'];
@@ -153,14 +165,14 @@ class VehiclepictureController extends Controller
 
             $data = [
                 $action=>$path_image,
-                'upda teAt'=>date("Y-m-dTH:i:s\Z"),
+                'updateAt'=> $updateAt,
             ];
 
         $vehicles_fineuser = DB::table('vehicles')->where([['user_id',$user_id]])->first();
         
         if($vehicles_fineuser){
             $multipicture = [
-                'updateAt'=>date("Y-m-dTH:i:s\Z"),
+                'updateAt'=> $updateAt,
             ];
             
             $vehicles_multipicture = DB::table('vehicles')
@@ -192,7 +204,7 @@ class VehiclepictureController extends Controller
                 'user_id'=>$user_id,
                 'status'=> "waiting",
                 'image_status'=> "waiting",
-                'createAt'=>date("Y-m-dTH:i:s\Z"),
+                'createAt'=> $createAt_insert,
             ];
             
             $vehicles_insert = DB::table('vehicles')->insert($data_insert);

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use DB;
 use Image,Str,Storage;
 use App\Http\Controllers\api\RegisterController;
+use DateTime;
+use DateInterval;
 
 class ProfilepictureController extends Controller
 {
@@ -56,7 +58,8 @@ class ProfilepictureController extends Controller
         $path = $path_folder.$imageName;
         $path_image = "/images/$action/$imageName";// แพทที่เก็บรูป
 
-       
+        $updateAt = new DateTime();
+        $updateAt_insert = new \MongoDB\BSON\UTCDateTime($updateAt);
 
         $status_upload = '';
         if(file_put_contents($path ,base64_decode($image))){
@@ -64,9 +67,12 @@ class ProfilepictureController extends Controller
             $img->insert(public_path('images/watermark/watermark.png'), 'center');
             $img->save(public_path($path_image));
 
+            
+
+
             $data = [
                 $action=>$path_image,
-                'updateAt'=>date("Y-m-dTH:i:s\Z"),
+                'updateAt'=> $updateAt_insert,
             ];
           
             $user = DB::table('users')->where('userToken',$userToken)->first();
@@ -95,16 +101,7 @@ class ProfilepictureController extends Controller
             $status_upload = "Unable to save the file.";
         }
 
-        // return response()->json([
-        
-        //     // 'images' =>$image_64,
-        //     'action'=>$action,
-        //     'path'=>$path_image,
-        //     'extension'=> $extension,//นามสกุลไฟล์
-        //     'imageName'=> $imageName,
-        //     'status_upload'=> $status_upload
-        // ]);
-        
+       
        
      }
 

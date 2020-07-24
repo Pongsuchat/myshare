@@ -8,6 +8,8 @@ use File;
 use Hash;
 use Illuminate\Http\Request;
 use \Firebase\JWT\JWT;
+use DateTime;
+use DateInterval;
 
 class RegisterController extends Controller
 {
@@ -76,6 +78,8 @@ class RegisterController extends Controller
         $deviceToken = $json['deviceToken'];
         $token = $this->token_jwt();
         
+        $created = new DateTime();
+        $created_insert = new \MongoDB\BSON\UTCDateTime($created);
 
         $data = [
         
@@ -87,7 +91,7 @@ class RegisterController extends Controller
             'role' => "Normal User",
             'status' => "New user",
             'images_status'=> "waiting",
-            'created' => date("Y-m-dTH:i:s\Z"),
+            'created' => $created_insert,
         
         ];
 

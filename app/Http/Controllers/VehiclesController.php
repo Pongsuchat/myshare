@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use DateTime;
+use DateInterval;
 
 class VehiclesController extends Controller
 {
@@ -15,11 +17,16 @@ class VehiclesController extends Controller
         $user_id = $request->get('user_id');
         $status = $request->get('status');
 
+        $approveDate = new DateTime();
+        $approveDate_insert = new \MongoDB\BSON\UTCDateTime($approveDate);
+        $timestamp = new DateTime();
+        $timestamp_insert = new \MongoDB\BSON\UTCDateTime($timestamp);
+
 
         $data = [
            
             'status' => $status,
-            'approveDate' => date("Y-m-dTH:i:s\Z"),//ยังต้องแก้กรณี reject
+            'approveDate' => $approveDate_insert,//ยังต้องแก้กรณี reject
         ];
 
     
@@ -36,7 +43,7 @@ class VehiclesController extends Controller
             'deviceToken' => $deviceToken,
             'device' => 'backoffice',
             'notificationType' => 'approveVehicle',
-            'timestamp' => date("Y-m-dTH:i:s\Z"),
+            'timestamp' => $timestamp_insert,
             'data' => 'dataที่บอกให้สร้างเปล่าๆไว้ก่อน',
         ];
     
@@ -51,7 +58,7 @@ class VehiclesController extends Controller
                 'deviceToken' => $deviceToken,
                 'device' => 'backoffice',
                 'notificationType' => 'approveVehicle',
-                'timestamp' => date("Y-m-dTH:i:s\Z"),
+                'timestamp' => $timestamp_insert,
                 'data' => 'dataที่บอกให้สร้างเปล่าๆไว้ก่อน',
             ];
            
@@ -62,12 +69,7 @@ class VehiclesController extends Controller
 
         $vehicles_detail = DB::table('vehicles')->where('user_id',$user_detail['_id'])->get();
 
-        // return view('adminusers.detailuser',[
-        
-        //     'user_detail' => $user_detail,
-        //     'vehicles_detail' => $vehicles_detail,
-        //     'vehicles_num' => $vehicles_detail->count()
-        //     ]);    
+          
         
         return redirect("usersdetail?id=$user_id");
         // return redirect("usersdetail?id=$user_id&id=vehicle");ส่ง id ไปฟังก์ชั่นอื่น

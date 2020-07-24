@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use DB;
 use Image,Str,Storage;
 use App\Http\Controllers\api\RegisterController;
+use DateTime;
+use DateInterval;
 
 class PersonalpictureController extends Controller
 {
@@ -122,11 +124,14 @@ class PersonalpictureController extends Controller
             exit;
         }
 
+        $updateAt = new DateTime();
+        $updateAt_insert = new \MongoDB\BSON\UTCDateTime($updateAt);
+         
         $user = DB::table('users')->where('userToken',$userToken)->first();
         
         $status = [
             'images_status'=> "success",
-            'updateAt'=>date("Y-m-dTH:i:s\Z"),
+            'updateAt'=> $updateAt_insert,
             
         ];
         $user_status = DB::table('users')->where('userToken',$userToken)->update($status);
