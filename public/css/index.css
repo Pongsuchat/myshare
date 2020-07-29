@@ -105,3 +105,25 @@ div.card {
   border: 0;
   text-decoration: none;
 }
+
+.price-rate-card { 
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+}
+
+.price-rate-title {
+  color: #000;
+  font-size: 24px;
+  font-family: 'K2D', sans-serif !important;
+  text-align: left;
+}
+
+.all-scrolling {
+  height: 90vh;
+  overflow: scroll;
+}
+
+#myTable_length {
+  text-align: left;
+}
