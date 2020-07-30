@@ -40,6 +40,7 @@ class CreatetripController extends Controller
         $tripprice = Tripprice::get();
         $data = $tripprice->first();
         $pricerate = $data['travel']['priceRate'];
+        $deposit_rate = $data['travel']['deposit'];
 
         $json = $request->json()->all();
         $tripFrom = $json['tripFrom'];
@@ -59,6 +60,8 @@ class CreatetripController extends Controller
         $tripId = $user['userName'] . rand();
 
         $netPrice = $pricerate * $distance;
+        $deposit = $netPrice*$deposit_rate/100;
+       
         //    $datetimestamp = (new DateTime())->add(new DateInterval('PT7H'));
         $datetimestamp = new DateTime();
         $datetime_insert = new \MongoDB\BSON\UTCDateTime($datetimestamp);
@@ -84,6 +87,7 @@ class CreatetripController extends Controller
             'tripStatus' => 'pending',
             'timestamps' => $datetime_insert,
             'netPrice' => $netPrice,
+            'deposit' => $deposit,
 
         ];
 
