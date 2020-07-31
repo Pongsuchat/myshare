@@ -22,6 +22,69 @@
 
     </nav>
 
+      {{-- @php
+          dd($vehicles);
+          die;
+      @endphp --}}
+    
+    <div class=" all-scrolling">
+      <div class="card-body">
+        <table class="table " id="myTable" style="justify-content: flex-start;">
+          <thead>
+            <tr>
+              <th scope="col" class="text-left">รูปโปรไฟล์รถ</th>
+              {{-- <th scope="col" class="text-left">ทะเบียน</th> --}}
+              <th scope="col" class="text-left">รายละเอียด</th>
+              {{-- <th scope="col" class="text-left">ระดับ</th> --}}
+    
+    
+              {{-- <th scope="col" class="text-center">การจัดการ</th> --}}
+            </tr>
+          </thead>
+    
+          <tbody>
+    
+            @foreach($vehicles as $data)
+            @php
+            $id = $data['_id'];
+            @endphp
+            <tr>
+    
+              <td><a data-fancybox="gallery" href="{{$data->vehiclePicture == null ? asset('images/system/nophoto.png'): $data->vehiclePicture}}"><img
+                src="{{$data->vehiclePicture == null ? asset('images/system/nophoto.png'): $data->vehiclePicture}}" width="150px" height="100px"></a></td>
+              
+              {{-- <td>{{$data->userName}}</td> --}}
+              {{-- <td>{{$data->phoneNumber}}</td> --}}
+    
+    
+    
+    
+              <td class="layout-text-center">
+                
+                <form method="GET">
+                  {{csrf_field()}}
+    
+                  <a type="submit" href="#">
+    
+                    <i class="" aria-hidden="true">รายละเอียด</i>
+                  </a>
+                </form>
+    
+              </td>
+            </tr>
+    
+    
+    
+            @endforeach
+    
+          </tbody>
+    
+    
+        </table>
+
+
+      
+
 
   </div>
   <div>

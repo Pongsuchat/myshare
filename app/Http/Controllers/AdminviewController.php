@@ -26,19 +26,20 @@ class AdminviewController extends Controller
    }
    public function narmoluser()
    {
-    $allusers = Users::where([
-        ['role','Normal User'],
-        // ['userPicture','']
-    ])->get();
+        $allusers = Users::where([
+            ['role','Normal User'],
+            // ['userPicture','']
+        ])->get();
 
-    return view('view_menu.usersview',[
+        return view('view_menu.usersview',[
+            
+            'allusers' => $allusers
+            
         
-        'allusers' => $allusers
-        
-    
-    ]);
+        ]);
 
    }
+   
 
    public function createuseradmin(Request $request)
    {
@@ -110,7 +111,17 @@ class AdminviewController extends Controller
    {
         $vehicles = Vehicles::where([
             ['status','pending'],
-        ])->get();
+        ])
+        ->join('users','vehicles.user_id','=','users._id')
+        // ->select('users.*')
+        ->get();
+
+        
+        // $users = DB::table('users')
+        //     ->join('users', 'users.user_id', '=', 'contacts.user_id')
+        //     ->join('orders', 'users.id', '=', 'orders.user_id')
+        //     ->select('users.*', 'contacts.phone', 'orders.price')
+        //     ->get();
         
 
         return view('view_menu.waitingforapprove',[
@@ -119,4 +130,24 @@ class AdminviewController extends Controller
         
         ]);
    }
+
+   
+//    public function waitingforapprove()
+//    {
+//         $pendingvehicle = Vehicle::where([
+//             ['status','pending'],
+//             // ['userPicture','']
+//         ])->get();
+
+//         dd($pendingvehicle);
+//         die;
+
+//         return view('view_menu.waitingforapprove',[
+            
+//             'pendingvehicle' => $pendingvehicle
+            
+        
+//         ]);
+
+//    }
 }

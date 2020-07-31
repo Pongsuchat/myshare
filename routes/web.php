@@ -33,6 +33,7 @@ Route::group(['middleware' => ['CheckAuth']], function () {
 
     Route::get('/adminuser','AdminviewController@adminuser');
     Route::get('/narmoluser','AdminviewController@narmoluser');
+    Route::get('/waitingforapprove','AdminviewController@waitingforapprove');
 
     Route::get('/travelprice','Price\TravelpriceController@travelprice');
     Route::match(['post','get'],'/tripprice','Price\TravelpriceController@tripprice');

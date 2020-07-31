@@ -272,7 +272,7 @@ class VehicledetailController extends Controller
         $image = str_replace(' ', '+', $image); 
         $imageName = Str::random(10).'.'.$extension;
 
-        $path_folder = public_path("images/vehicleprofile/").$user_name."/";
+        $path_folder = public_path("images/vehicleprofile/").$user_name."/".$imageName."/";
 
        
         if (!file_exists( $path_folder))  
@@ -281,7 +281,7 @@ class VehicledetailController extends Controller
         } 
         
         $path = $path_folder.$imageName;
-        $path_image = "/images/vehicleprofile/$user_name/$imageName";// แพทที่เก็บรูป
+        $path_image = "/images/vehicleprofile/$user_name/$imageName/$imageName";// แพทที่เก็บรูป
 
       
         if(file_put_contents($path ,base64_decode($image))){
@@ -378,7 +378,7 @@ class VehicledetailController extends Controller
         $imageName = Str::random(10).'.'.$extension;
 
         
-        $path_folder = public_path("images/vehicleprofile/").$user_name."/";
+        $path_folder = public_path("images/vehicleprofile/").$user_name."/".$carId."/";
 
        
         if (!file_exists( $path_folder))  
@@ -387,7 +387,7 @@ class VehicledetailController extends Controller
         } 
         
         $path = $path_folder.$imageName;
-        $path_image = "/images/vehicleprofile/$user_name/$imageName";// แพทที่เก็บรูป
+        $path_image = "/images/vehicleprofile/$user_name/$carId/$imageName";// แพทที่เก็บรูป
 
          $multipicture = [
             'path_image'=>$path_image,
@@ -578,7 +578,7 @@ class VehicledetailController extends Controller
 
         $vehicles = DB::table('vehicles')->where('_id',$carId)->first();
 
-
+        
 
             $status = [
                 'status'=> "pending",
@@ -587,7 +587,7 @@ class VehicledetailController extends Controller
             // $usert_status = DB::table('users')->where('userToken',$userToken)->update($status);
             $vehicles_status = DB::table('vehicles')->where('_id',$carId)->update($status);
 
-            
+        
              if ($vehicles_status) {
 
                 return response()->json([
@@ -601,7 +601,7 @@ class VehicledetailController extends Controller
                 return response()->json([
                     
                     'status'=>204,
-                    'msg'=>'ผิดพลาด ลองใหม่อีกครั้ง',
+                    'msg'=>'รถอยู่ระหว่างรอการยืนยัน หรือ พึ่งมีการเพิ่มเข้ามา',
                   
                 ]); 
              }
