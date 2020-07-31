@@ -44,15 +44,9 @@ class VehicleconfirmController extends Controller
         $action = $data['action'];
         $path_image = $data['path'];
         
-        $updateAt = new DateTime();
-        $updateAt_insert = new \MongoDB\BSON\UTCDateTime($updateAt);
-
-        $datetimestamp = new DateTime();
-        $datetime_insert = new \MongoDB\BSON\UTCDateTime($datetimestamp);
-        
         $data = [
             $action=>$path_image,
-            'updateAt'=> $updateAt_insert,
+            'updateAt'=>date("Y-m-dTH:i:s\Z"),
         ];
         $this->removePicture($action,$user_db['_id']);
         $vehicles = DB::table('vehicles')->where('user_id',$user_db['_id'])->update($data);

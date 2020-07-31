@@ -88,11 +88,17 @@ class AdminviewController extends Controller
    public function editadmin(Request $request)
    {$id = $request->input('id');
     $status = $request->input('status');
+
+    $updateAt = new DateTime();
+    $updateAt_insert = new \MongoDB\BSON\UTCDateTime($updateAt);
+
+    // $datetimestamp = new DateTime();
+    // $datetime_insert = new \MongoDB\BSON\UTCDateTime($datetimestamp);
     
     $data = [
        
         'status' => $status,
-        'approveDate' => date("Y-m-dTH:i:s\Z"),
+        'approveDate' => $updateAt_insert,
     ];
 
     $vehicles = DB::table('vehicles')->where('_id',$id)->update($data);

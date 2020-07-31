@@ -50,6 +50,9 @@ Route::GET('myVehicle', 'api\Createtrip\VehicledetailController@myVehicle');
 Route::GET('myDetailVehicle', 'api\Createtrip\VehicledetailController@myDetailVehicle');
 Route::POST('editMyDetailVehicle', 'api\Createtrip\VehicledetailController@editMyDetailVehicle');
 Route::POST('createVehicle', 'api\Createtrip\VehicledetailController@createVehicle');
+Route::POST('uploadVehicleProfileById', 'api\Createtrip\VehicledetailController@uploadVehicleProfileById');
+Route::GET('checkVehicleProfileById', 'api\Createtrip\VehicledetailController@checkVehicleProfileById');
+
 
 
 

@@ -311,9 +311,9 @@ class VehicledetailController extends Controller
                 'personalCardPicture'=>'',
                 'driverLicensePicture'=>'',
                 'actPicture'=>'',
-                'registrationPicture'=>'',
+                'registrationPicture'=> '',
                 'insurancePicture'=>'',
-                'vehicleDetailPicture'=>'',
+                'vehicleDetailPicture'=> [],
                 'status'=> 'new create',
                 'createAt'=> $createAt_insert,
                
@@ -346,8 +346,9 @@ class VehicledetailController extends Controller
 
     }
 
-    public function uploadVehicleProfileById(Reques $request)
+    public function uploadVehicleProfileById(Request $request)
     {
+
         $userToken = $request->header('userToken');
         if ($this->comparetoken($userToken) === false) {
             return response()->json([
@@ -365,9 +366,7 @@ class VehicledetailController extends Controller
         $json = $request->json()->all();
         $action = $json['action'];
         $image_64 = $request->input('picture');
-
-       
-        
+        $carId =$request->input('carId');
         
         $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];
         $replace = substr($image_64, 0, strpos($image_64, ',')+1); 
@@ -392,12 +391,15 @@ class VehicledetailController extends Controller
 
          $multipicture = [
             'path_image'=>$path_image,
+            'carId'=>$carId,
             'path'=>$path,
             'action'=>$action,
             'userToken'=> $userToken,
             'picture' => $image
         ];
 
+       
+       
         
         if($action=="vehicleDetailPicture"){
             //เช็คว่าเป็นการอัพโหลดหลายรูปไหมถ้าใ่ช่ให้โยนไป functino multiupdateImage
@@ -420,18 +422,18 @@ class VehicledetailController extends Controller
                 'updateAt'=> $updateAt_insert,
             ];
           
-            $vehicles_fineuser = DB::table('vehicles')->where([['user_id',$user_id],])->first();
+            $vehicles_fineuser = DB::table('vehicles')->where([['_id',$carId],])->first();
         
             @unlink(public_path($vehicles_fineuser[$action]));
             
            
-            $vehicles = DB::table('vehicles')->where('user_id',$user_id)->update($data);
+            $vehicles = DB::table('vehicles')->where('_id',$carId)->update($data);
 
            
         if($vehicles){
             return response()->json([
                 'status'=>200,
-                'msg'=>'Upload success-update',
+                'msg'=>'Edit success-update',
  
             ]);
         }else{
@@ -449,7 +451,7 @@ class VehicledetailController extends Controller
             if($vehicle_create){
                 return response()->json([
                     'status'=>200,
-                    'msg'=>'Upload success-insert',
+                    'msg'=>'Edit success-insert',
      
                 ]); 
             }
@@ -482,6 +484,10 @@ class VehicledetailController extends Controller
         $path_image = $multipicture['path_image'];
         $image = $multipicture['picture'];
         $path = $multipicture['path'];
+        $carId = $multipicture['carId'];
+
+        
+
 
          if(file_put_contents($path ,base64_decode($image))){
             $img = Image::make(public_path($path_image));
@@ -493,32 +499,38 @@ class VehicledetailController extends Controller
                 'updateAt'=> $updateAt,
             ];
 
-        $vehicles_fineuser = DB::table('vehicles')->where([['user_id',$user_id]])->first();
+        $vehicles_fine = DB::table('vehicles')->where([['_id',$carId]])->first();
+        $vehicle_id = $vehicles_fine['_id'];
         
-        if($vehicles_fineuser){
+        $path_image_arr = array($path_image);
+       
+        $updateAt = new DateTime();
+        $updateAt_insert = new \MongoDB\BSON\UTCDateTime($updateAt);
+
+        if($vehicles_fine){
             $multipicture = [
-                'updateAt'=> $updateAt,
+                'updateAt'=> $updateAt_insert,
             ];
             
+           
             $vehicles_multipicture = DB::table('vehicles')
-                            ->where([
-                                ['user_id',$user_id],
-                                
-                            ])
-                            ->push( 'vehicleDetailPicture',$path_image);
+                            ->where([['_id',$vehicle_id]])
+                            ->push( 'vehicleDetailPicture',$path_image_arr);
                             
-            $vehicles = DB::table('vehicles')->where('user_id',$user_id)->update($multipicture);                
+            $vehicles = DB::table('vehicles')->where('_id',$vehicle_id)->update($multipicture);   
+            
+
                             
             if($vehicles_multipicture){
                 return response()->json([
                     'status'=>200,
-                    'msg'=>'Upload success multi-push',
+                    'msg'=>'Edit success multi-push',
      
                 ]); 
             }else {
                 return response()->json([
                     'status'=>500,
-                    'msg'=>'upload failed',
+                    'msg'=>'Edit failed',
      
                 ]);}
             
@@ -536,16 +548,63 @@ class VehicledetailController extends Controller
             if($vehicles_insert){
                 return response()->json([
                     'status'=>200,
-                    'msg'=>'Upload success multi-insert',
+                    'msg'=>'Edit success multi-insert',
                 ]); 
             }
             else {
                 return response()->json([
                     'status'=>500,
-                    'msg'=>'upload failed',
+                    'msg'=>'Edit failed',
      
                 ]);
             }
         }
+     }
+    } 
+    
+    public function checkVehicleProfileById(Request $request)
+    {
+        $userToken = $request->header('userToken');
+        
+        if ($this->comparetoken($userToken) === false) {
+            return response()->json([
+                'status' => 404,
+                'msg' => 'token is not found',
+            ]);
+            exit;
+        }
+
+        $carId =$request->input('carId');
+
+        $vehicles = DB::table('vehicles')->where('_id',$carId)->first();
+
+
+
+            $status = [
+                'status'=> "pending",
+                'image_status'=> "success",
+            ];
+            // $usert_status = DB::table('users')->where('userToken',$userToken)->update($status);
+            $vehicles_status = DB::table('vehicles')->where('_id',$carId)->update($status);
+
+            
+             if ($vehicles_status) {
+
+                return response()->json([
+                    
+                    'status'=>200,
+                    'msg'=>'all upload success pending to approval',
+                  
+                ]); 
+             }else {
+                
+                return response()->json([
+                    
+                    'status'=>204,
+                    'msg'=>'ผิดพลาด ลองใหม่อีกครั้ง',
+                  
+                ]); 
+             }
+        
     }
 }
